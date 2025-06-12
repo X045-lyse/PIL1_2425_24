@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inscription - IFRI Comotorage</title>
+  <link rel="stylesheet" href="frontend/inscription.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Inscription</h2>
+    <form id="registerForm">
+      <input type="text" placeholder="Nom" id="nom" required />
+      <input type="text" placeholder="Prénom" id="prenom" required />
+      <input type="tel" placeholder="Téléphone" id="telephone" required />
+      <input type="email" placeholder="Email" id="email" required />
+      <input type="password" placeholder="Mot de passe" id="password" required />
+
+      <div class="role">
+        <label><input type="radio" name="role" value="conducteur" required /> Conducteur</label>
+        <label><input type="radio" name="role" value="passager" required /> Passager</label>
+      </div>
+
+      <button type="submit">Créer mon compte</button>
+    </form>
+    <p id="message"></p>
+  </div>
+  <script src="inscription.js"></script>
+</body>
+</html>

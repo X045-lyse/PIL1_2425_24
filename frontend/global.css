@@ -1,0 +1,95 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  padding: 1rem;
+}
+
+/* CONTENEUR GENERAL */
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  max-width: 500px;
+  margin: auto;
+}
+
+/* TITRES */
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* FORMULAIRES */
+input, select, textarea {
+  width: 100%;
+  padding: 0.9rem;
+  margin: 0.5rem 0 1rem 0;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* BOUTONS */
+button, .btn {
+  padding: 0.8rem 1.2rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover, .btn:hover {
+  background-color: #1e40af;
+}
+
+.btn.secondary {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}
+
+.btn.secondary:hover {
+  background-color: #cbd5e1;
+}
+
+/* IMAGES */
+img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+/* RESPONSIVE DESIGN */
+@media screen and (max-width: 600px) {
+  .container {
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+
+  input, select, button {
+    font-size: 0.95rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .chat-box {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+}
