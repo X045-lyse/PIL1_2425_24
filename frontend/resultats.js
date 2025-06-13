@@ -1,58 +1,71 @@
-const donnees = [
-  {
-    nom: "Jean K.",
-    photo: "https://randomuser.me/api/portraits/men/12.jpg",
-    depart: "Agla",
-    arrivee: "IFRI",
-    heure: "07:30",
-    role: "Conducteur",
-    places: 3
-  },
-  {
-    nom: "Fatou A.",
-    photo: "https://randomuser.me/api/portraits/women/45.jpg",
-    depart: "Calavi",
-    arrivee: "IFRI",
-    heure: "07:45",
-    role: "Passager"
-  },
-  {
-    nom: "Marc D.",
-    photo: "https://randomuser.me/api/portraits/men/33.jpg",
-    depart: "Kouhounou",
-    arrivee: "IFRI",
-    heure: "08:00",
-    role: "Conducteur",
-    places: 2
+<script>
+  // Exemple de résultats simulés (à remplacer par les vrais)
+  const matchingResults = [
+    {
+      conducteur: {
+        nom: "Jean Dupont",
+        photo: "https://randomuser.me/api/portraits/men/45.jpg",
+        from: "IFRI UAC",
+        to: "IFRI UAC",
+        heureDepart: "08:00",
+        placesDisponibles: 3,
+      },
+      passager: {
+        nom: "Marie Curie",
+        photo: "https://randomuser.me/api/portraits/women/65.jpg",
+        heureDepartSouhaitee: "08:15",
+      }
+    },
+    {
+      conducteur: {
+        nom: "Paul Martin",
+        photo: "https://randomuser.me/api/portraits/men/20.jpg",
+        from: "IFRI UAC",
+        to: "IFRI UAC",
+        heureDepart: "07:45",
+        placesDisponibles: 2,
+      },
+      passager: {
+        nom: "Sophie Leroy",
+        photo: "https://randomuser.me/api/portraits/women/40.jpg",
+        heureDepartSouhaitee: "08:00",
+      }
+    }
+  ];
+
+  function afficherMatching(results) {
+    const container = document.getElementById("matching-results");
+    container.innerHTML = "";
+
+    if (!results || results.length === 0) {
+      container.innerHTML = "<p>Aucun matching trouvé.</p>";
+      return;
+    }
+
+    results.forEach(({ conducteur, passager }) => {
+      const item = document.createElement("div");
+      item.classList.add("matching-result-item");
+
+      item.innerHTML = `
+        <img src="${conducteur.photo}" alt="Photo de ${conducteur.nom}" />
+        <div class="matching-result-details">
+          <p><strong>Conducteur :</strong> ${conducteur.nom}</p>
+          <p><strong>De :</strong> ${conducteur.from}</p>
+          <p><strong>À :</strong> ${conducteur.to}</p>
+          <p><strong>Départ :</strong> ${conducteur.heureDepart}</p>
+          <p><strong>Places dispo :</strong> ${conducteur.placesDisponibles}</p>
+        </div>
+        <img src="${passager.photo}" alt="Photo de ${passager.nom}" />
+        <div class="matching-result-details">
+          <p><strong>Passager :</strong> ${passager.nom}</p>
+          <p><strong>Heure départ souhaitée :</strong> ${passager.heureDepartSouhaitee}</p>
+        </div>
+      `;
+
+      container.appendChild(item);
+    });
   }
-];
 
-const container = document.getElementById("resultats");
-
-donnees.forEach((personne) => {
-  const card = document.createElement("div");
-  card.className = "card";
-
-  const img = document.createElement("img");
-  img.src = personne.photo;
-
-  const info = document.createElement("div");
-  info.className = "info";
-  info.innerHTML = `
-    <h3>${personne.nom}</h3>
-    <p><strong>${personne.role}</strong></p>
-    <p>${personne.depart} → ${personne.arrivee}</p>
-    <p>Départ : ${personne.heure}</p>
-    ${personne.role === "Conducteur" ? `<p>Places : ${personne.places}</p>` : ""}
-  `;
-
-  const btn = document.createElement("button");
-  btn.className = "btn";
-  btn.textContent = "Contacter";
-  btn.onclick = () => alert(`Contacter ${personne.nom} (simulé)`);
-
-  card.appendChild(img);
-  card.appendChild(info);
-  card.appendChild(btn);
-  container.appendChild(card);
-});
+  // On lance l'affichage au chargement
+  afficherMatching(matchingResults);
+</script>

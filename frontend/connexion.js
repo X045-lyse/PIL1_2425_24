@@ -1,24 +1,20 @@
-document.getElementById("loginForm").addEventListener("submit", function(e) {
+document.getElementById("form-connexion").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const message = document.getElementById("message");
+  const identifiant = document.getElementById("identifiant").value.trim();
+  const motdepasse = document.getElementById("motdepasse").value;
 
-  if (email === "" || password === "") {
-    message.style.color = "red";
-    message.textContent = "Tous les champs sont obligatoires.";
+  const utilisateurs = JSON.parse(localStorage.getItem("utilisateurs") || "[]");
+
+  const utilisateur = utilisateurs.find(u =>
+    (u.email === identifiant || u.telephone === identifiant) && u.motdepasse === motdepasse
+  );
+
+  if (utilisateur) {
+    alert("Connexion réussie !");
+    localStorage.setItem("utilisateurConnecte", JSON.stringify(utilisateur));
+    window.location.href = "profil.html"; // ou accueil.html
   } else {
-    message.style.color = "green";
-    message.textContent = "Connexion réussie. Redirection...";
-    setTimeout(() => {
-      // Simule une redirection
-      window.location.href = "profil.html";
-    }, 1500);
+    alert("Identifiants incorrects !");
   }
-});
-
-document.getElementById("forgot").addEventListener("click", function(e) {
-  e.preventDefault();
-  alert("Lien de réinitialisation envoyé (simulation).");
 });

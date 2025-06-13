@@ -1,30 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Inscription - IFRI Comotorage</title>
-  <link rel="stylesheet" href="frontend/inscription.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inscription | IFRI Covoiturage</title>
+  <link rel="stylesheet" href="inscription.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Inscription</h2>
-    <form id="registerForm">
-      <input type="text" placeholder="Nom" id="nom" required />
-      <input type="text" placeholder="Prénom" id="prenom" required />
-      <input type="tel" placeholder="Téléphone" id="telephone" required />
-      <input type="email" placeholder="Email" id="email" required />
-      <input type="password" placeholder="Mot de passe" id="password" required />
-
-      <div class="role">
-        <label><input type="radio" name="role" value="conducteur" required /> Conducteur</label>
-        <label><input type="radio" name="role" value="passager" required /> Passager</label>
+  <main class="form-container">
+    <h1>Inscription</h1>
+    <form id="form-inscription">
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input type="text" id="nom" required>
       </div>
 
-      <button type="submit">Créer mon compte</button>
+      <div class="form-group">
+        <label for="prenom">Prénom</label>
+        <input type="text" id="prenom" required>
+      </div>
+
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input type="tel" id="telephone" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Adresse e-mail</label>
+        <input type="email" id="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="motdepasse">Mot de passe</label>
+        <input type="password" id="motdepasse" required>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Rôle</label>
+        <select id="role" required>
+          <option value="">-- Choisir un rôle --</option>
+          <option value="conducteur">Conducteur</option>
+          <option value="passager">Passager</option>
+        </select>
+      </div>
+
+      <button type="submit">S'inscrire</button>
     </form>
-    <p id="message"></p>
-  </div>
+
+    <p>Vous avez déjà un compte ? <a href="connexion.html">Se connecter</a></p>
+  </main>
+
   <script src="inscription.js"></script>
 </body>
 </html>

@@ -1,64 +1,74 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #e2e8f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background: #f0f2f5;
+  margin: 0;
+  padding: 0;
 }
 
-.container {
-  background: white;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  width: 90%;
+.form-container {
   max-width: 400px;
+  background: white;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-h2 {
+h1 {
   text-align: center;
-  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
 }
 
 input {
   width: 100%;
-  padding: 0.8rem;
-  margin: 0.5rem 0;
-  border: 1px solid #cbd5e1;
+  padding: 10px;
+  border: 1px solid #ccc;
   border-radius: 8px;
-}
-
-.forgot {
-  display: block;
-  text-align: right;
-  font-size: 0.9rem;
-  color: #2563eb;
-  margin-bottom: 1rem;
-  text-decoration: none;
-}
-
-.forgot:hover {
-  text-decoration: underline;
+  font-size: 14px;
 }
 
 button {
   width: 100%;
-  padding: 0.8rem;
-  background-color: #2563eb;
+  background-color: #007bff;
   color: white;
+  padding: 12px;
   border: none;
   border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1rem;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background-color: #1e40af;
+  background-color: #0056b3;
 }
 
-#message {
+.lien-mdp-oublie {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.lien-mdp-oublie a {
+  font-size: 14px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.lien-mdp-oublie a:hover {
+  text-decoration: underline;
+}
+
+p {
   text-align: center;
-  margin-top: 1rem;
-  font-weight: bold;
+  margin-top: 20px;
 }

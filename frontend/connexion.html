@@ -2,22 +2,34 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connexion - IFRI Comotorage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion | IFRI Covoiturage</title>
   <link rel="stylesheet" href="connexion.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Connexion</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Email ou Téléphone" required>
-      <input type="password" id="password" placeholder="Mot de passe" required>
+  <main class="form-container">
+    <h1>Connexion</h1>
+    <form id="form-connexion">
+      <div class="form-group">
+        <label for="identifiant">Email ou téléphone</label>
+        <input type="text" id="identifiant" required>
+      </div>
 
-      <a href="#" id="forgot" class="forgot">Mot de passe oublié ?</a>
+      <div class="form-group">
+        <label for="motdepasse">Mot de passe</label>
+        <input type="password" id="motdepasse" required>
+      </div>
+
+      <p class="lien-mdp-oublie">
+        <a href="reinitialisation.html">Mot de passe oublié ?</a>
+      </p>
+
       <button type="submit">Se connecter</button>
-      <p id="message"></p>
     </form>
-  </div>
+
+    <p>Pas encore inscrit ? <a href="inscription.html">Créer un compte</a></p>
+  </main>
+
   <script src="connexion.js"></script>
 </body>
 </html>

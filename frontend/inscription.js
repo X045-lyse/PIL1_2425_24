@@ -1,22 +1,38 @@
-document.getElementById("registerForm").addEventListener("submit", function (e) {
+document.getElementById("form-inscription").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const nom = document.getElementById("nom").value;
-  const prenom = document.getElementById("prenom").value;
-  const tel = document.getElementById("telephone").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const role = document.querySelector('input[name="role"]:checked');
+  const nom = document.getElementById("nom").value.trim();
+  const prenom = document.getElementById("prenom").value.trim();
+  const telephone = document.getElementById("telephone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const motdepasse = document.getElementById("motdepasse").value;
+  const role = document.getElementById("role").value;
 
-  if (!role) {
-    alert("Veuillez choisir un rôle.");
+  if (!nom || !prenom || !telephone || !email || !motdepasse || !role) {
+    alert("Veuillez remplir tous les champs.");
     return;
   }
 
-  // Simuler l'enregistrement
-  const message = document.getElementById("message");
-  message.textContent = `Compte ${role.value} créé avec succès pour ${prenom} ${nom} !`;
+  const utilisateurs = JSON.parse(localStorage.getItem("utilisateurs") || "[]");
 
-  // Réinitialiser le formulaire
-  this.reset();
+  const existant = utilisateurs.find(u => u.email === email || u.telephone === telephone);
+  if (existant) {
+    alert("Un utilisateur avec ce téléphone ou cet email existe déjà.");
+    return;
+  }
+
+  const nouveauUser = {
+    nom,
+    prenom,
+    telephone,
+    email,
+    motdepasse,
+    role
+  };
+
+  utilisateurs.push(nouveauUser);
+  localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
+
+  alert("Inscription réussie !");
+  window.location.href = "connexion.html";
 });

@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Messagerie</title>
-  <link rel="stylesheet" href="messagerie.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Messagerie - IFRI Comotorage</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="messagerie.css" />
 </head>
 <body>
 
-  <header>
-    <h1>💬 Messagerie</h1>
-    <a href="index.html">🏠 Accueil</a>
-  </header>
+<div class="messagerie">
 
-  <main>
-    <div id="messagesContainer" class="messages-container"></div>
+  <aside class="sidebar">
+    <header>
+      <h2>IFRI Comotorage</h2>
+      <div class="profile-pic-placeholder" title="Mon profil"></div>
+    </header>
+    <div class="search-bar">
+      <input type="text" placeholder="Rechercher une conversation..." />
+    </div>
+    <ul class="conversations-list" id="conversationsList">
+      <!-- Conversations chargées ici via JS -->
+    </ul>
+  </aside>
 
-    <form id="messageForm">
-      <input type="text" id="messageInput" placeholder="Tapez votre message..." required>
-      <button type="submit">Envoyer</button>
-    </form>
+  <main class="chat-area">
+    <header class="chat-header">
+      <div class="chat-user-info">
+        <div class="chat-user-pic"></div>
+        <div class="chat-user-name">Sélectionnez une conversation</div>
+      </div>
+    </header>
+
+    <section class="chat-messages" id="chatMessages">
+      <!-- Messages affichés ici -->
+      <p class="empty-chat">Aucune conversation sélectionnée</p>
+    </section>
+
+    <footer class="chat-input-area" style="display:none;">
+      <input type="text" id="chatInput" placeholder="Écrire un message..." autocomplete="off" />
+      <button id="sendBtn" aria-label="Envoyer message">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" width="24" height="24">
+          <path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/>
+        </svg>
+      </button>
+    </footer>
   </main>
 
-  <script src="messagerie.js"></script>
+</div>
+
+<script src="messagerie.js"></script>
+
 </body>
 </html>

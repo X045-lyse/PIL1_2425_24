@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Réinitialisation mot de passe</title>
+  <link rel="stylesheet" href="reinitialisation.css">
+</head>
+<body>
+  <main class="form-container">
+    <h1>Réinitialiser votre mot de passe</h1>
+
+    <!-- Étape 1 : Demander l'identifiant -->
+    <form id="form-identifiant">
+      <label for="identifiant">Email ou numéro de téléphone</label>
+      <input type="text" id="identifiant" required>
+      <button type="submit">Envoyer le code</button>
+    </form>
+
+    <!-- Étape 2 : Vérifier le code -->
+    <form id="form-code" style="display: none;">
+      <label for="code">Code reçu</label>
+      <input type="text" id="code" required>
+      <button type="submit">Vérifier</button>
+    </form>
+
+    <!-- Étape 3 : Nouveau mot de passe -->
+    <form id="form-motdepasse" style="display: none;">
+      <label for="new-password">Nouveau mot de passe</label>
+      <input type="password" id="new-password" required>
+
+      <label for="confirm-password">Confirmer mot de passe</label>
+      <input type="password" id="confirm-password" required>
+
+      <button type="submit">Réinitialiser</button>
+    </form>
+
+    <p><a href="connexion.html">Retour à la connexion</a></p>
+  </main>
+
+  <script src="reinitialisation.js"></script>
+</body>
+</html>

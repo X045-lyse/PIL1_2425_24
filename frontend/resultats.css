@@ -1,62 +1,52 @@
-body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f1f5f9;
-  padding: 2rem;
-}
+<style>
+  .matching-results-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 15px;
+    border: 2px solid #0077cc;
+    border-radius: 8px;
+    background: #f0f8ff;
+    font-family: Arial, sans-serif;
+  }
 
-.container {
-  max-width: 900px;
-  margin: auto;
-}
+  .matching-results-container h2 {
+    color: #005fa3;
+    text-align: center;
+    margin-bottom: 20px;
+  }
 
-h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-}
+  .matching-result-item {
+    background: white;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-.resultats {
-  display: grid;
-  gap: 1rem;
-}
+  .matching-result-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #0077cc;
+  }
 
-.card {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 1rem;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
+  .matching-result-details {
+    flex-grow: 1;
+    min-width: 180px;
+  }
 
-.card img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  .matching-result-details strong {
+    color: #004080;
+  }
 
-.info {
-  flex: 1;
-}
-
-.info h3 {
-  margin: 0;
-}
-
-.info p {
-  margin: 0.3rem 0;
-}
-
-.btn {
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: #1e40af;
-}
+  .matching-result-details p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
+  }
+</style>
