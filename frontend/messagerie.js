@@ -129,3 +129,51 @@ function loadConversations(data) {
 // Exporter pour que backend puisse appeler loadConversations et autres
 window.loadConversations = loadConversations;
 window.selectConversation = selectConversation;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "connexion.html";
+    return;
+  }
+
+  // Charger les conversations
+  async function loadConversations() {
+    const res = await fetch("http://localhost:5000/message/conversations", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const conversations = await res.json();
+    // ...affiche la liste dans la sidebar
+  }
+
+  // Charger les messages d'une conversation
+  async function loadMessages(conversationId) {
+    const res = await fetch(`http://localhost:5000/message/conversation/${conversationId}`, {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const messages = await res.json();
+    // ...affiche les messages dans la zone de chat
+  }
+
+  // Envoi d'un message
+  document.getElementById("sendBtn").onclick = async () => {
+    const text = document.getElementById("chatInput").value.trim();
+    if (!text) return;
+    // ...récupère l'id de la conversation ou du destinataire
+    await fetch("http://localhost:5000/message/envoyer", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({
+        destinataire_id: /* à compléter */,
+        texte: text
+      })
+    });
+    document.getElementById("chatInput").value = "";
+    // Recharge les messages
+  };
+
+  loadConversations();
+});

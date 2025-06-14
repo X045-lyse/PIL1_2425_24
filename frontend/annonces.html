@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mes annonces</title>
-  <link rel="stylesheet" href="annonces.css" />
+  <meta charset="UTF-8">
+  <title>Annonces - IFRI Comotorage</title>
+  <link rel="stylesheet" href="annonces.css">
 </head>
 <body>
-
   <header>
-    <h1>Mes annonces</h1>
+    <h1>Annonces de covoiturage</h1>
     <a href="index.html">🏠 Accueil</a>
   </header>
 
   <main>
-    <div id="annoncesContainer">
+    <div>
+      <button id="voir-trajets">Voir trajets</button>
+      <button id="voir-demandes">Voir demandes</button>
+    </div>
+    <div id="message" style="color:red;text-align:center;margin:10px 0;"></div>
+    <div id="annonces-list">
       <!-- Les annonces seront ajoutées ici dynamiquement -->
     </div>
   </main>
 
+  <a href="accueil.html">Retour à l'accueil</a>
   <script src="annonces.js"></script>
 </body>
 </html>

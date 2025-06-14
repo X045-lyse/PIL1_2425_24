@@ -11,9 +11,12 @@ class Utilisateur(db.Model):
     telephone = db.Column(db.String(20), unique=True)
     mot_de_passe = db.Column(db.String(128))
     role = db.Column(db.String(20))  # 'conducteur' ou 'passager'
+    photo = db.Column(db.String(255), nullable=True)  # chemin vers la photo de profil
     point_depart = db.Column(db.String(255))
     horaire = db.Column(db.Time)
-    vehicule = db.Column(db.String(100), nullable=True)
+    vehicule_marque = db.Column(db.String(100), nullable=True)
+    vehicule_modele = db.Column(db.String(100), nullable=True)
+    vehicule_places = db.Column(db.Integer, nullable=True)
 
 class Trajet(db.Model):
     __tablename__ = 'trajet'
@@ -24,6 +27,10 @@ class Trajet(db.Model):
     date = db.Column(db.Date)
     heure_depart = db.Column(db.Time)
     nb_places = db.Column(db.Integer)
+    depart_lat = db.Column(db.Float)
+    depart_lng = db.Column(db.Float)
+    arrivee_lat = db.Column(db.Float)
+    arrivee_lng = db.Column(db.Float)
 
 class Demande(db.Model):
     __tablename__ = 'demande'
@@ -33,6 +40,10 @@ class Demande(db.Model):
     point_arrivee = db.Column(db.String(255))
     date = db.Column(db.Date)
     heure_souhaitee = db.Column(db.Time)
+    depart_lat = db.Column(db.Float)
+    depart_lng = db.Column(db.Float)
+    arrivee_lat = db.Column(db.Float)
+    arrivee_lng = db.Column(db.Float)
 
 class Matching(db.Model):
     __tablename__ = 'matching'
@@ -49,3 +60,10 @@ class Message(db.Model):
     destinataire_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'))
     texte = db.Column(db.Text)
     horodatage = db.Column(db.DateTime)
+
+class Reservation(db.Model):
+    __tablename__ = 'reservation'
+    id = db.Column(db.Integer, primary_key=True)
+    passager_id = db.Column(db.Integer, db.ForeignKey('utilisateur.id'), nullable=False)
+    trajet_id = db.Column(db.Integer, db.ForeignKey('trajet.id'), nullable=False)
+    nombre_places = db.Column(db.Integer, nullable=False)

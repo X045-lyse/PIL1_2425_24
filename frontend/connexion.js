@@ -1,20 +1,27 @@
-document.getElementById("form-connexion").addEventListener("submit", function(e) {
+document.getElementById("form-connexion").addEventListener("submit", async function(e) {
   e.preventDefault();
+  const message = document.getElementById("message");
+  message.textContent = "";
 
-  const identifiant = document.getElementById("identifiant").value.trim();
-  const motdepasse = document.getElementById("motdepasse").value;
+  const data = {
+    identifiant: document.getElementById("identifiant").value.trim(),
+    mot_de_passe: document.getElementById("motdepasse").value
+  };
 
-  const utilisateurs = JSON.parse(localStorage.getItem("utilisateurs") || "[]");
-
-  const utilisateur = utilisateurs.find(u =>
-    (u.email === identifiant || u.telephone === identifiant) && u.motdepasse === motdepasse
-  );
-
-  if (utilisateur) {
-    alert("Connexion réussie !");
-    localStorage.setItem("utilisateurConnecte", JSON.stringify(utilisateur));
-    window.location.href = "profil.html"; // ou accueil.html
-  } else {
-    alert("Identifiants incorrects !");
+  try {
+    const res = await fetch("http://localhost:5000/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (res.ok && result.token) {
+      localStorage.setItem("token", result.token);
+      window.location.href = "accueil.html";
+    } else {
+      message.textContent = result.error || "Identifiants incorrects !";
+    }
+  } catch (err) {
+    message.textContent = "Erreur réseau.";
   }
 });

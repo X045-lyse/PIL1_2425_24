@@ -1,124 +1,132 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Récupérer l'utilisateur connecté depuis le localStorage ou sessionStorage
-    const currentUser = JSON.parse(localStorage.getItem('currentUser')) || 
-                        JSON.parse(sessionStorage.getItem('currentUser'));
+document.addEventListener("DOMContentLoaded", async () => {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "connexion.html";
+    return;
+  }
 
-    // Si aucun utilisateur n'est connecté, rediriger vers la page de connexion
-    if (!currentUser) {
-        window.location.href = 'login.html';
-        return;
-    }
+  // Éléments du DOM
+  const profileForm = document.getElementById('profile-form');
+  const profileName = document.getElementById('profile-name');
+  const lastnameInput = document.getElementById('lastname');
+  const firstnameInput = document.getElementById('firstname');
+  const departurePointInput = document.getElementById('departure-point');
+  const departureTimeInput = document.getElementById('departure-time');
+  const arrivalTimeInput = document.getElementById('arrival-time');
+  const carBrandInput = document.getElementById('car-brand');
+  const carModelInput = document.getElementById('car-model');
+  const seatsAvailableInput = document.getElementById('seats-available');
+  const avatarUpload = document.getElementById('avatar-upload');
+  const profileAvatar = document.getElementById('profile-avatar');
+  const cancelBtn = document.getElementById('cancel-btn');
+  const logoutBtn = document.getElementById('logout');
+  const driverSection = document.getElementById('driver-section');
 
-    // Éléments du DOM
-    const profileForm = document.getElementById('profile-form');
-    const profileName = document.getElementById('profile-name');
-    const lastnameInput = document.getElementById('lastname');
-    const firstnameInput = document.getElementById('firstname');
-    const departurePointInput = document.getElementById('departure-point');
-    const departureTimeInput = document.getElementById('departure-time');
-    const arrivalTimeInput = document.getElementById('arrival-time');
-    const carBrandInput = document.getElementById('car-brand');
-    const carModelInput = document.getElementById('car-model');
-    const seatsAvailableInput = document.getElementById('seats-available');
-    const avatarUpload = document.getElementById('avatar-upload');
-    const profileAvatar = document.getElementById('profile-avatar');
-    const cancelBtn = document.getElementById('cancel-btn');
-    const logoutBtn = document.getElementById('logout');
-    const driverSection = document.getElementById('driver-section');
+  // Charger les infos utilisateur
+  let user = {};
+  try {
+    const res = await fetch("http://localhost:5000/auth/profil", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    user = await res.json();
 
     // Remplir le formulaire avec les données de l'utilisateur
     function fillUserData() {
         // Nom et prénom (obligatoires, venant de l'inscription)
-        profileName.textContent = `${currentUser.firstname} ${currentUser.lastname}`;
-        lastnameInput.value = currentUser.lastname;
-        firstnameInput.value = currentUser.firstname;
+        profileName.textContent = `${user.firstname} ${user.lastname}`;
+        lastnameInput.value = user.lastname;
+        firstnameInput.value = user.firstname;
         
         // Autres informations (peuvent être vides initialement)
-        departurePointInput.value = currentUser.departurePoint || '';
-        departureTimeInput.value = currentUser.departureTime || '';
-        arrivalTimeInput.value = currentUser.arrivalTime || '';
+        departurePointInput.value = user.departurePoint || '';
+        departureTimeInput.value = user.departureTime || '';
+        arrivalTimeInput.value = user.arrivalTime || '';
         
         // Gestion conducteur/passager
-        if (currentUser.userType === 'driver') {
+        if (user.userType === 'driver') {
             // Afficher la section véhicule
             driverSection.style.display = 'block';
-            carBrandInput.value = currentUser.carBrand || '';
-            carModelInput.value = currentUser.carModel || '';
-            seatsAvailableInput.value = currentUser.seatsAvailable || '';
+            carBrandInput.value = user.carBrand || '';
+            carModelInput.value = user.carModel || '';
+            seatsAvailableInput.value = user.seatsAvailable || '';
         } else {
             // Cacher la section véhicule pour les passagers
             driverSection.style.display = 'none';
         }
         
         // Photo de profil (facultative)
-        if (currentUser.avatar) {
-            profileAvatar.src = currentUser.avatar;
+        if (user.avatar) {
+            profileAvatar.src = user.avatar;
         }
     }
 
-    // Gestionnaire d'upload de photo
-    avatarUpload.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                profileAvatar.src = event.target.result;
-                // Sauvegarder l'image dans le profil utilisateur
-                currentUser.avatar = event.target.result;
-                saveUserData();
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Soumission du formulaire
-    profileForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        saveUserData();
-        alert('Profil mis à jour avec succès !');
-    });
-
-    // Fonction pour sauvegarder les données
-    function saveUserData() {
-        // Mettre à jour les données modifiables
-        currentUser.departurePoint = departurePointInput.value;
-        currentUser.departureTime = departureTimeInput.value;
-        currentUser.arrivalTime = arrivalTimeInput.value;
-        
-        // Mettre à jour les infos véhicule si conducteur
-        if (currentUser.userType === 'driver') {
-            currentUser.carBrand = carBrandInput.value;
-            currentUser.carModel = carModelInput.value;
-            currentUser.seatsAvailable = seatsAvailableInput.value;
-        }
-        
-        // Mettre à jour le stockage local
-        if (localStorage.getItem('currentUser')) {
-            localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        } else {
-            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-        }
-        
-        // Mettre à jour le nom affiché
-        profileName.textContent = `${currentUser.firstname} ${currentUser.lastname}`;
-    }
-
-    // Bouton Annuler
-    cancelBtn.addEventListener('click', function() {
-        fillUserData(); // Réinitialiser les champs
-    });
-
-    // Bouton Déconnexion
-    logoutBtn.addEventListener('click', function() {
-        // Effacer les données de session
-        localStorage.removeItem('currentUser');
-        sessionStorage.removeItem('currentUser');
-        // Rediriger vers la page de connexion
-        window.location.href = 'login.html';
-    });
-
-    // Initialisation
     fillUserData();
+
+  } catch (err) {
+    alert("Erreur lors du chargement du profil.");
+  }
+
+  // Gestionnaire d'upload de photo
+  avatarUpload.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(event) {
+              profileAvatar.src = event.target.result;
+              // Sauvegarder l'image dans le profil utilisateur
+              user.avatar = event.target.result;
+              saveUserData();
+          };
+          reader.readAsDataURL(file);
+      }
+  });
+
+  // Modification du profil
+  profileForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const data = {
+      nom: lastnameInput.value,
+      prenom: firstnameInput.value,
+      point_depart: departurePointInput.value,
+      horaire: departureTimeInput.value,
+      horaire_arrivee: arrivalTimeInput.value,
+      vehicule_marque: carBrandInput.value,
+      vehicule_modele: carModelInput.value,
+      vehicule_places: seatsAvailableInput.value
+    };
+    try {
+      const res = await fetch(`http://localhost:5000/auth/update/${user.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        alert("Profil mis à jour !");
+        location.reload();
+      } else {
+        alert("Erreur lors de la mise à jour.");
+      }
+    } catch {
+      alert("Erreur réseau.");
+    }
+  });
+
+  // Bouton Annuler
+  cancelBtn.addEventListener('click', function() {
+      fillUserData(); // Réinitialiser les champs
+  });
+
+  // Bouton Déconnexion
+  logoutBtn.addEventListener('click', function() {
+      // Effacer les données de session
+      localStorage.removeItem('currentUser');
+      sessionStorage.removeItem('currentUser');
+      // Rediriger vers la page de connexion
+      window.location.href = 'login.html';
+  });
 });
 
 

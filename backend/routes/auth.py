@@ -1,49 +1,129 @@
 from flask import Blueprint, request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Utilisateur
-from datetime import time
+import os
+import jwt
+from datetime import datetime, timedelta
+import bcrypt
 
 auth_bp = Blueprint('auth', __name__)
+
+UPLOAD_FOLDER = 'uploads/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+SECRET_KEY = "votre_cle_secrete"  # À placer dans un fichier de config sécurisé
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 @auth_bp.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-
     nom = data.get('nom')
     prenom = data.get('prenom')
     email = data.get('email')
     telephone = data.get('telephone')
     mot_de_passe = data.get('mot_de_passe')
     role = data.get('role')
+    photo = data.get('photo')  # facultatif
     point_depart = data.get('point_depart')
-    horaire = data.get('horaire')  # format attendu : "08:30"
-    vehicule = data.get('vehicule')
+    horaire = data.get('horaire')  # format "HH:MM"
+    vehicule_marque = data.get('vehicule_marque')
+    vehicule_modele = data.get('vehicule_modele')
+    vehicule_places = data.get('vehicule_places')
 
-    # Vérifier que les champs obligatoires sont là
-    if not all([nom, prenom, email, telephone, mot_de_passe, role]):
-        return jsonify({"error": "Champs obligatoires manquants"}), 400
+    if Utilisateur.query.filter((Utilisateur.email == email) | (Utilisateur.telephone == telephone)).first():
+        return jsonify({"error": "Email ou téléphone déjà utilisé"}), 400
 
-    # Convertir l'horaire (texte) en objet time
-    try:
-        h, m = map(int, horaire.split(':'))
-        horaire_obj = time(hour=h, minute=m)
-    except:
-        return jsonify({"error": "Format d'horaire invalide (attendu HH:MM)"}), 400
-
-    # Créer l'utilisateur
+    hashed_password = bcrypt.hashpw(mot_de_passe.encode(), bcrypt.gensalt(rounds=10))
     utilisateur = Utilisateur(
         nom=nom,
         prenom=prenom,
         email=email,
         telephone=telephone,
-        mot_de_passe=mot_de_passe,
+        mot_de_passe=hashed_password,
         role=role,
+        photo=photo,
         point_depart=point_depart,
-        horaire=horaire_obj,
-        vehicule=vehicule
+        horaire=horaire,
+        vehicule_marque=vehicule_marque,
+        vehicule_modele=vehicule_modele,
+        vehicule_places=vehicule_places
     )
-
     db.session.add(utilisateur)
     db.session.commit()
-
     return jsonify({"message": "Utilisateur enregistré avec succès."}), 201
 
+@auth_bp.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    identifiant = data.get('identifiant')
+    mot_de_passe = data.get('mot_de_passe')
+    utilisateur = Utilisateur.query.filter(
+        (Utilisateur.email == identifiant)
+    ).first()
+    if utilisateur and bcrypt.checkpw(mot_de_passe.encode(), utilisateur.mot_de_passe.encode()):
+        token = jwt.encode(
+            {
+                "user_id": utilisateur.id,
+                "exp": datetime.utcnow() + timedelta(hours=24)
+            },
+            SECRET_KEY,
+            algorithm="HS256"
+        )
+        return jsonify({"token": token}), 200
+    return jsonify({"error": "Identifiants invalides"}), 401
+
+@auth_bp.route('/update/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+    data = request.get_json()
+    utilisateur = Utilisateur.query.get(user_id)
+    if not utilisateur:
+        return jsonify({"error": "Utilisateur introuvable"}), 404
+
+    # Mets à jour les champs si présents dans la requête
+    for field in ['nom', 'prenom', 'email', 'telephone', 'role', 'photo', 'point_depart', 'horaire', 'vehicule_marque', 'vehicule_modele', 'vehicule_places']:
+        if field in data:
+            setattr(utilisateur, field, data[field])
+    db.session.commit()
+    return jsonify({"message": "Profil mis à jour"}), 200
+
+@auth_bp.route('/reset_password', methods=['POST'])
+def reset_password():
+    data = request.get_json()
+    identifiant = data.get('identifiant')
+    new_password = data.get('nouveau_mot_de_passe')
+    utilisateur = Utilisateur.query.filter(
+        (Utilisateur.email == identifiant) | (Utilisateur.telephone == identifiant)
+    ).first()
+    if not utilisateur:
+        return jsonify({"error": "Utilisateur introuvable"}), 404
+    utilisateur.mot_de_passe = generate_password_hash(new_password)
+    db.session.commit()
+    return jsonify({"message": "Mot de passe réinitialisé"}), 200
+
+@auth_bp.route('/upload_photo/<int:user_id>', methods=['POST'])
+def upload_photo(user_id):
+    if 'photo' not in request.files:
+        return jsonify({"error": "Aucun fichier envoyé"}), 400
+    file = request.files['photo']
+    if file and allowed_file(file.filename):
+        filename = f"user_{user_id}_{file.filename}"
+        filepath = os.path.join(UPLOAD_FOLDER, filename)
+        file.save(filepath)
+        utilisateur = Utilisateur.query.get(user_id)
+        utilisateur.photo = filepath
+        db.session.commit()
+        return jsonify({"message": "Photo uploadée"}), 200
+    return jsonify({"error": "Format de fichier non autorisé"}), 400
+
+@auth_bp.route('/changer_role/<int:user_id>', methods=['PUT'])
+def changer_role(user_id):
+    data = request.get_json()
+    utilisateur = Utilisateur.query.get(user_id)
+    if not utilisateur:
+        return jsonify({"error": "Utilisateur introuvable"}), 404
+    if 'role' not in data:
+        return jsonify({"error": "Champ 'role' manquant"}), 400
+    utilisateur.role = data['role']
+    db.session.commit()
+    return jsonify({"message": "Rôle modifié"}), 200

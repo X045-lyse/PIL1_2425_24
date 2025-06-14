@@ -21,11 +21,16 @@ main {
 }
 
 .annonce {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  margin: 15px 0;
+  padding: 18px 20px;
+  transition: box-shadow 0.2s;
+}
+
+.annonce:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.13);
 }
 
 .annonce h3 {
@@ -35,6 +40,25 @@ main {
 
 .annonce p {
   margin: 5px 0;
+}
+
+.annonce strong {
+  color: #007bff;
+}
+
+button {
+  margin: 0 5px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0056b3;
 }
 
 button.supprimer {

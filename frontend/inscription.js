@@ -1,38 +1,40 @@
-document.getElementById("form-inscription").addEventListener("submit", function(e) {
+document.getElementById("form-inscription").addEventListener("submit", async function(e) {
   e.preventDefault();
+  const message = document.getElementById("message");
+  message.style.color = "red";
+  message.textContent = "";
 
-  const nom = document.getElementById("nom").value.trim();
-  const prenom = document.getElementById("prenom").value.trim();
-  const telephone = document.getElementById("telephone").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const motdepasse = document.getElementById("motdepasse").value;
-  const role = document.getElementById("role").value;
-
-  if (!nom || !prenom || !telephone || !email || !motdepasse || !role) {
-    alert("Veuillez remplir tous les champs.");
-    return;
-  }
-
-  const utilisateurs = JSON.parse(localStorage.getItem("utilisateurs") || "[]");
-
-  const existant = utilisateurs.find(u => u.email === email || u.telephone === telephone);
-  if (existant) {
-    alert("Un utilisateur avec ce téléphone ou cet email existe déjà.");
-    return;
-  }
-
-  const nouveauUser = {
-    nom,
-    prenom,
-    telephone,
-    email,
-    motdepasse,
-    role
+  // Récupération des valeurs
+  const data = {
+    nom: document.getElementById("nom").value.trim(),
+    prenom: document.getElementById("prenom").value.trim(),
+    telephone: document.getElementById("telephone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    mot_de_passe: document.getElementById("motdepasse").value,
+    role: document.getElementById("role").value
   };
+  
+  // Validation JS simple
+  if (data.mot_de_passe.length < 6) {
+    message.textContent = "Le mot de passe doit contenir au moins 6 caractères.";
+    return;
+  }
 
-  utilisateurs.push(nouveauUser);
-  localStorage.setItem("utilisateurs", JSON.stringify(utilisateurs));
-
-  alert("Inscription réussie !");
-  window.location.href = "connexion.html";
+  try {
+    const res = await fetch("http://localhost:5000/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (res.ok) {
+      message.style.color = "green";
+      message.textContent = "Inscription réussie ! Redirection...";
+      setTimeout(() => window.location.href = "connexion.html", 1200);
+    } else {
+      message.textContent = result.error || "Erreur lors de l'inscription.";
+    }
+  } catch (err) {
+    message.textContent = "Erreur réseau.";
+  }
 });

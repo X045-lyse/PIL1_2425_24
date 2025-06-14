@@ -1,58 +1,53 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const container = document.getElementById("annoncesContainer");
+  const annoncesList = document.getElementById("annonces-list");
+  const voirTrajets = document.getElementById("voir-trajets");
+  const voirDemandes = document.getElementById("voir-demandes");
+  const message = document.getElementById("message");
 
-  // Vérifier l'utilisateur connecté
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  if (!currentUser) {
-    alert("Veuillez vous connecter d'abord.");
-    window.location.href = "connexion.html";
-    return;
+  function getToken() {
+    return localStorage.getItem("token");
   }
 
-  // Récupérer les annonces dans localStorage
-  const offres = JSON.parse(localStorage.getItem("offres")) || [];
-  const demandes = JSON.parse(localStorage.getItem("demandes")) || [];
-
-  // Filtrer les annonces de l'utilisateur connecté
-  const mesOffres = offres.filter(offre => offre.auteur === currentUser.email);
-  const mesDemandes = demandes.filter(demande => demande.auteur === currentUser.email);
-
-  // Fonction pour afficher une carte d'annonce
-  function afficherAnnonce(type, annonce, index) {
-    const div = document.createElement("div");
-    div.className = "annonce";
-
-    div.innerHTML = `
-      <h3>${type === 'offre' ? "Offre" : "Demande"} de covoiturage</h3>
-      <p><strong>Départ :</strong> ${annonce.depart}</p>
-      <p><strong>Arrivée :</strong> ${annonce.arrivee}</p>
-      <p><strong>Heure :</strong> ${annonce.heure}</p>
-      ${type === 'offre' ? `<p><strong>Places :</strong> ${annonce.places}</p>` : ""}
-      <button class="supprimer" data-type="${type}" data-index="${index}">🗑️ Supprimer</button>
-    `;
-
-    container.appendChild(div);
-  }
-
-  // Afficher les offres et demandes de l'utilisateur
-  mesOffres.forEach((offre, index) => afficherAnnonce("offre", offre, index));
-  mesDemandes.forEach((demande, index) => afficherAnnonce("demande", demande, index));
-
-  // Gestion suppression
-  container.addEventListener("click", e => {
-    if (e.target.classList.contains("supprimer")) {
-      const type = e.target.dataset.type;
-      const index = parseInt(e.target.dataset.index);
-
-      if (type === "offre") {
-        offres.splice(index, 1);
-        localStorage.setItem("offres", JSON.stringify(offres));
+  async function chargerAnnonces(type) {
+    annoncesList.innerHTML = "<em>Chargement...</em>";
+    message.textContent = "";
+    const url = type === "trajet"
+      ? "http://localhost:5000/trajet/?page=1&per_page=10"
+      : "http://localhost:5000/demande/?page=1&per_page=10";
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        annoncesList.innerHTML = data.map(a => `
+          <div class="annonce">
+            <strong>${type === "trajet" ? "Trajet" : "Demande"}</strong><br>
+            <b>De :</b> ${a.point_depart} <b>à</b> ${a.point_arrivee}<br>
+            <b>Date :</b> ${a.date} <b>Heure :</b> ${a.heure_depart || a.heure_souhaitee}<br>
+            ${type === "trajet" ? `<b>Places :</b> ${a.nb_places}` : ""}
+            <br>
+            ${getToken() ? `<button onclick="initierMatching('${type}', ${a.id})">Proposer un matching</button>` : ""}
+          </div>
+        `).join("");
       } else {
-        demandes.splice(index, 1);
-        localStorage.setItem("demandes", JSON.stringify(demandes));
+        annoncesList.innerHTML = "<em>Aucune annonce trouvée.</em>";
       }
-
-      location.reload(); // Recharger la page pour mettre à jour
+    } catch (err) {
+      annoncesList.innerHTML = "";
+      message.textContent = "Erreur de chargement.";
     }
-  });
+  }
+
+  voirTrajets.onclick = () => chargerAnnonces("trajet");
+  voirDemandes.onclick = () => chargerAnnonces("demande");
+  voirTrajets.click();
+
+  window.initierMatching = async function(type, id) {
+    if (!getToken()) {
+      alert("Connectez-vous pour proposer un matching.");
+      window.location.href = "connexion.html";
+      return;
+    }
+    // À compléter : appel API pour le matching
+    alert(`Matching à implémenter pour ${type} id=${id}`);
+  };
 });
