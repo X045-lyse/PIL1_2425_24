@@ -26,7 +26,8 @@ def register():
     role = data.get('role')
     photo = data.get('photo')  # facultatif
     point_depart = data.get('point_depart')
-    horaire = data.get('horaire')  # format "HH:MM"
+    horaire_depart = data.get('horaire_depart')  # format "HH:MM"
+    horaire_arrivee = data.get('horaire_arrivee')  # format "HH:MM"
     vehicule_marque = data.get('vehicule_marque')
     vehicule_modele = data.get('vehicule_modele')
     vehicule_places = data.get('vehicule_places')
@@ -44,7 +45,8 @@ def register():
         role=role,
         photo=photo,
         point_depart=point_depart,
-        horaire=horaire,
+        horaire_depart=datetime.strptime(horaire_depart, "%H:%M").time() if horaire_depart else None,
+        horaire_arrivee=datetime.strptime(horaire_arrivee, "%H:%M").time() if horaire_arrivee else None,
         vehicule_marque=vehicule_marque,
         vehicule_modele=vehicule_modele,
         vehicule_places=vehicule_places
@@ -81,9 +83,12 @@ def update_user(user_id):
         return jsonify({"error": "Utilisateur introuvable"}), 404
 
     # Mets à jour les champs si présents dans la requête
-    for field in ['nom', 'prenom', 'email', 'telephone', 'role', 'photo', 'point_depart', 'horaire', 'vehicule_marque', 'vehicule_modele', 'vehicule_places']:
+    for field in ['nom', 'prenom', 'email', 'telephone', 'role', 'photo', 'point_depart', 'horaire_depart', 'horaire_arrivee', 'vehicule_marque', 'vehicule_modele', 'vehicule_places']:
         if field in data:
-            setattr(utilisateur, field, data[field])
+            if field in ['horaire_depart', 'horaire_arrivee'] and data[field]:
+                setattr(utilisateur, field, datetime.strptime(data[field], "%H:%M").time())
+            else:
+                setattr(utilisateur, field, data[field])
     db.session.commit()
     return jsonify({"message": "Profil mis à jour"}), 200
 
@@ -157,8 +162,40 @@ def get_profil():
         "role": utilisateur.role,
         "photo": utilisateur.photo,
         "point_depart": utilisateur.point_depart,
-        "horaire": utilisateur.horaire.strftime("%H:%M") if utilisateur.horaire else "",
+        "horaire_depart": utilisateur.horaire_depart.strftime("%H:%M") if utilisateur.horaire_depart else "",
+        "horaire_arrivee": utilisateur.horaire_arrivee.strftime("%H:%M") if utilisateur.horaire_arrivee else "",
         "vehicule_marque": utilisateur.vehicule_marque,
         "vehicule_modele": utilisateur.vehicule_modele,
         "vehicule_places": utilisateur.vehicule_places
     })
+
+@auth_bp.route('/profil', methods=['PUT'])
+@token_required
+def update_profil():
+    token = None
+    if 'Authorization' in request.headers:
+        auth_header = request.headers['Authorization']
+        if auth_header.startswith("Bearer "):
+            token = auth_header.split(" ")[1]
+        else:
+            token = auth_header
+    try:
+        data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        user_id = data["user_id"]
+    except Exception:
+        return jsonify({"error": "Token invalide"}), 401
+
+    utilisateur = Utilisateur.query.get(user_id)
+    if not utilisateur:
+        return jsonify({"error": "Utilisateur introuvable"}), 404
+
+    champs = ['nom', 'prenom', 'email', 'telephone', 'role', 'photo', 'point_depart', 'horaire_depart', 'horaire_arrivee', 'vehicule_marque', 'vehicule_modele', 'vehicule_places', 'depart_lat', 'depart_lng']
+    data = request.get_json()
+    for field in champs:
+        if field in data:
+            if field in ['horaire_depart', 'horaire_arrivee'] and data[field]:
+                setattr(utilisateur, field, datetime.strptime(data[field], "%H:%M").time())
+            else:
+                setattr(utilisateur, field, data[field])
+    db.session.commit()
+    return jsonify({"message": "Profil mis à jour"}), 200

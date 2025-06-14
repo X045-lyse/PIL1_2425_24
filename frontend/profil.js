@@ -20,11 +20,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("lastname").value = user.nom || "";
     document.getElementById("firstname").value = user.prenom || "";
     document.getElementById("departure-point").value = user.point_depart || "";
-    document.getElementById("departure-time").value = user.horaire || "";
-    // Si tu as un champ arrival-time, adapte ici
+    document.getElementById("departure-time").value = user.horaire_depart || "";
+    document.getElementById("arrival-time").value = user.horaire_arrivee || "";
     document.getElementById("car-brand").value = user.vehicule_marque || "";
     document.getElementById("car-model").value = user.vehicule_modele || "";
     document.getElementById("seats-available").value = user.vehicule_places || "";
+    document.getElementById("depart_lat").value = user.depart_lat || "";
+    document.getElementById("depart_lng").value = user.depart_lng || "";
 
     // Affiche la section véhicule seulement si conducteur
     if (user.role === "conducteur") {
@@ -48,43 +50,55 @@ document.addEventListener("DOMContentLoaded", async () => {
   }).addTo(map);
 
   let marker = null;
-
-
-
   map.on('click', function(e) {
     if (marker) map.removeLayer(marker);
     marker = L.marker(e.latlng).addTo(map);
     document.getElementById('depart_lat').value = e.latlng.lat;
     document.getElementById('depart_lng').value = e.latlng.lng;
-    // Affiche les coordonnées dans le champ "Point de départ habituel"
     document.getElementById('departure-point').value = `${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}`;
   });
 });
 
-// Exemple de code pour l'inscription
-document.getElementById('register-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const user = {
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-        firstname: document.getElementById('firstname').value,
-        lastname: document.getElementById('lastname').value,
-        userType: document.querySelector('input[name="user-type"]:checked').value, // 'driver' ou 'passenger'
-        // Les autres champs seront remplis plus tard dans le profil
-        departurePoint: '',
-        departureTime: '',
-        arrivalTime: '',
-        carBrand: '',
-        carModel: '',
-        seatsAvailable: '',
-        avatar: 'images/default-avatar.png'
-    };
+document.getElementById("profile-form").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "connexion.html";
+    return;
+  }
 
-    // Sauvegarder l'utilisateur
-    localStorage.setItem('currentUser', JSON.stringify(user));
-    // Rediriger vers la page de profil
-    window.location.href = 'profile.html';
+  const data = {
+    nom: document.getElementById("lastname").value,
+    prenom: document.getElementById("firstname").value,
+    point_depart: document.getElementById("departure-point").value,
+    horaire_depart: document.getElementById("departure-time").value,
+    horaire_arrivee: document.getElementById("arrival-time").value,
+    vehicule_marque: document.getElementById("car-brand").value,
+    vehicule_modele: document.getElementById("car-model").value,
+    vehicule_places: document.getElementById("seats-available").value,
+    depart_lat: document.getElementById("depart_lat").value,
+    depart_lng: document.getElementById("depart_lng").value
+  };
+
+  try {
+    const res = await fetch("http://localhost:5000/auth/profil", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (res.ok) {
+      alert("Profil mis à jour !");
+      window.location.reload();
+    } else {
+      alert(result.error || "Erreur lors de la mise à jour.");
+    }
+  } catch (err) {
+    alert("Erreur réseau.");
+  }
 });
 
 

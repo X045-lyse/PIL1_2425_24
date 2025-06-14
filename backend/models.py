@@ -13,7 +13,8 @@ class Utilisateur(db.Model):
     role = db.Column(db.String(20))  # 'conducteur' ou 'passager'
     photo = db.Column(db.String(255), nullable=True)  # chemin vers la photo de profil
     point_depart = db.Column(db.String(255))
-    horaire = db.Column(db.Time)
+    horaire_depart = db.Column(db.Time)
+    horaire_arrivee = db.Column(db.Time)
     vehicule_marque = db.Column(db.String(100), nullable=True)
     vehicule_modele = db.Column(db.String(100), nullable=True)
     vehicule_places = db.Column(db.Integer, nullable=True)
