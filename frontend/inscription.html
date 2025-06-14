@@ -33,8 +33,24 @@
         <label for="role">Rôle</label>
         <select id="role" name="role" required>
           <option value="conducteur">Conducteur</option>
-          <option value="passager">Passager</option>
+          <option value="passager" selected>Passager</option>
         </select>
+      </div>
+      <div id="conducteur-fields" style="display:none;">
+        <div class="form-group">
+          <label for="vehicule_marque">Marque du véhicule</label>
+          <input type="text" id="vehicule_marque" name="vehicule_marque">
+        </div>
+
+        <div class="form-group">
+          <label for="vehicule_modele">Modèle du véhicule</label>
+          <input type="text" id="vehicule_modele" name="vehicule_modele">
+        </div>
+
+        <div class="form-group">
+          <label for="vehicule_places">Nombre de places disponibles</label>
+          <input type="number" id="vehicule_places" name="vehicule_places" min="1">
+        </div>
       </div>
       <button type="submit">S'inscrire</button>
       <div id="message" style="margin-top:15px;color:red;text-align:center;"></div>

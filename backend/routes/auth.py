@@ -5,12 +5,12 @@ import os
 import jwt
 from datetime import datetime, timedelta
 import bcrypt
+from utils import token_required, SECRET_KEY
 
 auth_bp = Blueprint('auth', __name__)
 
 UPLOAD_FOLDER = 'uploads/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
-SECRET_KEY = "votre_cle_secrete"  # À placer dans un fichier de config sécurisé
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -127,3 +127,38 @@ def changer_role(user_id):
     utilisateur.role = data['role']
     db.session.commit()
     return jsonify({"message": "Rôle modifié"}), 200
+
+@auth_bp.route('/profil', methods=['GET'])
+@token_required
+def get_profil():
+    token = None
+    if 'Authorization' in request.headers:
+        auth_header = request.headers['Authorization']
+        if auth_header.startswith("Bearer "):
+            token = auth_header.split(" ")[1]
+        else:
+            token = auth_header
+    try:
+        data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        user_id = data["user_id"]
+    except Exception:
+        return jsonify({"error": "Token invalide"}), 401
+
+    utilisateur = Utilisateur.query.get(user_id)
+    if not utilisateur:
+        return jsonify({"error": "Utilisateur introuvable"}), 404
+
+    return jsonify({
+        "id": utilisateur.id,
+        "nom": utilisateur.nom,
+        "prenom": utilisateur.prenom,
+        "email": utilisateur.email,
+        "telephone": utilisateur.telephone,
+        "role": utilisateur.role,
+        "photo": utilisateur.photo,
+        "point_depart": utilisateur.point_depart,
+        "horaire": utilisateur.horaire.strftime("%H:%M") if utilisateur.horaire else "",
+        "vehicule_marque": utilisateur.vehicule_marque,
+        "vehicule_modele": utilisateur.vehicule_modele,
+        "vehicule_places": utilisateur.vehicule_places
+    })

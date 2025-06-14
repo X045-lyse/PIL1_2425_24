@@ -1,3 +1,13 @@
+document.addEventListener("DOMContentLoaded", function() {
+  const roleSelect = document.getElementById("role");
+  const conducteurFields = document.getElementById("conducteur-fields");
+  // Masque les champs véhicule au chargement si passager est sélectionné
+  conducteurFields.style.display = roleSelect.value === "conducteur" ? "block" : "none";
+  roleSelect.addEventListener("change", function() {
+    conducteurFields.style.display = this.value === "conducteur" ? "block" : "none";
+  });
+});
+
 document.getElementById("form-inscription").addEventListener("submit", async function(e) {
   e.preventDefault();
   const message = document.getElementById("message");
@@ -13,7 +23,13 @@ document.getElementById("form-inscription").addEventListener("submit", async fun
     mot_de_passe: document.getElementById("motdepasse").value,
     role: document.getElementById("role").value
   };
-  
+
+  if (data.role === "conducteur") {
+    data.vehicule_marque = document.getElementById("vehicule_marque").value.trim();
+    data.vehicule_modele = document.getElementById("vehicule_modele").value.trim();
+    data.vehicule_places = parseInt(document.getElementById("vehicule_places").value);
+  }
+
   // Validation JS simple
   if (data.mot_de_passe.length < 6) {
     message.textContent = "Le mot de passe doit contenir au moins 6 caractères.";
@@ -38,3 +54,5 @@ document.getElementById("form-inscription").addEventListener("submit", async fun
     message.textContent = "Erreur réseau.";
   }
 });
+
+
