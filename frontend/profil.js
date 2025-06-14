@@ -36,8 +36,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // Photo de profil
+    const avatarImg = document.getElementById("profile-avatar");
     if (user.photo) {
-      document.getElementById("profile-avatar").src = user.photo;
+      avatarImg.src = user.photo;
+    } else if (user.email) {
+      avatarImg.src = getGravatarUrl(user.email);
     }
   } catch (err) {
     alert("Erreur réseau lors du chargement du profil.");
@@ -100,6 +103,22 @@ document.getElementById("profile-form").addEventListener("submit", async functio
     alert("Erreur réseau.");
   }
 });
+
+document.getElementById("logout-btn").addEventListener("click", function(e) {
+  e.preventDefault();
+  localStorage.removeItem("token");
+  window.location.href = "connexion.html";
+});
+
+function md5(string) {
+  // Fonction md5 minimale (tu peux utiliser une vraie lib pour la prod)
+  return CryptoJS.MD5(string).toString();
+}
+
+function getGravatarUrl(email, size = 128) {
+  const hash = md5(email.trim().toLowerCase());
+  return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
+}
 
 
 
