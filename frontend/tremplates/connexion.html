@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Connexion - IFRI Comotorage</title>
-  <link rel="stylesheet" href="connexion.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='css/connexion.css')}}">
 </head>
 <body>
   <div class="form-container">
@@ -23,6 +23,6 @@
     <p><a href="reinitialisation.html">Mot de passe oublié ?</a></p>
     <p>Pas encore inscrit ? <a href="inscription.html">Créer un compte</a></p>
   </div>
-  <script src="connexion.js"></script>
+  <script src="{{url_for('static', filename='js/connexion.js')}}"></script>
 </body>
 </html>
