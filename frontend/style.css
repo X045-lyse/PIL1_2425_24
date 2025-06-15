@@ -281,7 +281,7 @@ nav a.active {
   width: 60px;
   height: 60px;
   margin: 0 auto 1.5rem;
-  background-color: rgba(37, 99, 235, 0.1);
+  background-color: blue(37, 99, 235, 0.1);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -301,7 +301,7 @@ nav a.active {
   font-size: 0.95rem;
 }
 
-/* Testimonials */
+
 .testimonials {
   padding: 5rem 2rem;
   background-color: #f1f5f9;
@@ -369,7 +369,7 @@ nav a.active {
   color: var(--gray);
 }
 
-/* CTA Section */
+
 .cta-section {
   padding: 5rem 2rem;
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
@@ -400,7 +400,7 @@ nav a.active {
   flex-wrap: wrap;
 }
 
-/* Footer */
+
 footer {
   background-color: var(--dark);
   color: white;
@@ -417,9 +417,11 @@ footer {
 
 .footer-col h4 {
   font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   position: relative;
   padding-bottom: 0.75rem;
+  line-height: 1.4;
+
 }
 
 .footer-col h4::after {
@@ -565,4 +567,132 @@ footer {
     gap: 1rem;
     text-align: center;
   }
+}
+
+
+.legal {
+    line-height: 1.2;
+    margin-left: -1cm;
+    padding-left: 1cm;
+}
+
+.legal-li {
+    margin-bottom: 0.2em;
+}
+
+
+
+
+
+
+
+
+
+.legal-page {
+  padding: 80px 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.legal-page h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.legal-page p, .legal-page ul {
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.legal-page ul {
+  list-style: disc;
+  padding-left: 20px;
+}
+
+
+
+
+
+
+
+
+
+.nav-link {
+  color: black;
+  background: none;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #0066cc; /* bleu au survol */
+}
+/* Supprimer tous les contours, bordures et ombres sur tous les éléments au focus */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Supprimer bordures, contours et ombres spécifiques aux liens */
+a, a:hover, a:focus, a:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none;
+  color: #000000; /* texte noir */
+}
+
+/* Si tu veux que le texte devienne bleu au survol, mais sans bordure ni contour */
+a:hover {
+  color: #0056b3 !important;
+  text-decoration: none !important;
+}
+.footer-links {
+  margin-left: 2cm;          /* décale vers la droite de 2 cm */
+  line-height: 1.2;          /* réduit l’interligne */
+}
+
+.footer-links a {
+  display: block;
+  margin-bottom: 0.3rem;     /* petit espacement entre les liens */
+  color: #000;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.footer-links a:focus, .footer-links a:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+/* Cible le contenu après "Légal" */
+h4:has(+ ul) + ul,
+h4:has(+ div) + div {
+    line-height: 1.2 !important;
+    margin-left: -1cm !important;
+    padding-left: 1cm !important;
+}
+
+/* Alternative si :has() n'est pas supporté */
+h4 + * {
+    line-height: 1.2;
+    margin-left: -1cm;
+    padding-left: 1cm;
+}
+
+
+.legal {
+    margin-left: 0 !important;
+    padding-left: 1em !important;
+    line-height: 1.4;
 }

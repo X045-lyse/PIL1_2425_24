@@ -93,3 +93,24 @@ img {
     overflow-y: auto;
   }
 }
+/* Supprimer tous les contours, bordures et ombres sur tous les éléments au focus */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Supprimer bordures, contours et ombres spécifiques aux liens */
+a, a:hover, a:focus, a:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  text-decoration: none;
+  color: #000000; /* texte noir */
+}
+
+/* Si tu veux que le texte devienne bleu au survol, mais sans bordure ni contour */
+a:hover {
+  color: #0056b3 !important;
+  text-decoration: none !important;
+}

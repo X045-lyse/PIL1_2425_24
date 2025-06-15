@@ -1,24 +1,7 @@
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
-    // Sample data for demonstration
+
     const sampleRides = [
         {
             id: 1,
@@ -137,7 +120,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ridesContainer.innerHTML = '';
         
         rides.forEach(ride => {
-            // Apply filter
             if (currentFilter === 'drivers' && ride.type !== 'driver') return;
             if (currentFilter === 'passengers' && ride.type !== 'passenger') return;
             
@@ -194,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ridesContainer.appendChild(rideCard);
         });
         
-        // Add click event to all ride cards
+        
         document.querySelectorAll('.ride-card').forEach(card => {
             card.addEventListener('click', function() {
                 const rideId = parseInt(this.getAttribute('data-id'));
@@ -203,7 +185,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Render rating stars
     function renderRatingStars(rating) {
         const fullStars = Math.floor(rating);
         const hasHalfStar = rating % 1 >= 0.5;
@@ -311,16 +292,15 @@ document.addEventListener('DOMContentLoaded', function() {
         rideDetailsModal.show();
     }
 
-    // Setup event listeners
+    
     function setupEventListeners() {
-        // Search form submission
+        
         searchForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            // In a real app, this would filter the rides based on search criteria
+            //
             alert('Fonctionnalité de recherche à implémenter');
         });
-        
-        // Publish form submission
+
         publishForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -332,19 +312,19 @@ document.addEventListener('DOMContentLoaded', function() {
             const seats = document.getElementById('publishSeats').value;
             const notes = document.getElementById('publishNotes').value;
             
-            // Validate inputs
+            
             if (!departure || !arrival || !date || !time || (rideType === 'offer' && !seats)) {
                 alert('Veuillez remplir tous les champs obligatoires');
                 return;
             }
             
-            // In a real app, this would send the data to the server
+            
             alert('Trajet publié avec succès! (Fonctionnalité à implémenter)');
             publishForm.reset();
             setDefaultDate();
         });
         
-        // Filter change events
+        
         filterAll.addEventListener('change', function() {
             if (this.checked) {
                 currentFilter = 'all';
@@ -366,7 +346,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
-        // Ride type change (show/hide seats field)
+        
         offerType.addEventListener('change', function() {
             seatsField.style.display = 'block';
         });
@@ -375,7 +355,7 @@ document.addEventListener('DOMContentLoaded', function() {
             seatsField.style.display = 'none';
         });
         
-        // Contact button in ride details modal
+    
         contactRideUser.addEventListener('click', function() {
             alert('Fonctionnalité de messagerie à implémenter');
             rideDetailsModal.hide();
@@ -384,6 +364,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    // Initialize the application
+    
     init();
 });
