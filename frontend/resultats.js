@@ -1,37 +1,16 @@
 <script>
-  // Exemple de résultats simulés (à remplacer par les vrais)
-  const matchingResults = [
-    {
-      conducteur: {
-        nom: "Jean Dupont",
-        photo: "https://randomuser.me/api/portraits/men/45.jpg",
-        from: "IFRI UAC",
-        to: "IFRI UAC",
-        heureDepart: "08:00",
-        placesDisponibles: 3,
-      },
-      passager: {
-        nom: "Marie Curie",
-        photo: "https://randomuser.me/api/portraits/women/65.jpg",
-        heureDepartSouhaitee: "08:15",
-      }
-    },
-    {
-      conducteur: {
-        nom: "Paul Martin",
-        photo: "https://randomuser.me/api/portraits/men/20.jpg",
-        from: "IFRI UAC",
-        to: "IFRI UAC",
-        heureDepart: "07:45",
-        placesDisponibles: 2,
-      },
-      passager: {
-        nom: "Sophie Leroy",
-        photo: "https://randomuser.me/api/portraits/women/40.jpg",
-        heureDepartSouhaitee: "08:00",
-      }
+  document.addEventListener("DOMContentLoaded", async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "connexion.html";
+      return;
     }
-  ];
+    const res = await fetch("http://localhost:5000/matching/resultats", {
+      headers: { "Authorization": "Bearer " + token }
+    });
+    const results = await res.json();
+    afficherMatching(results);
+  });
 
   function afficherMatching(results) {
     const container = document.getElementById("matching-results");
@@ -50,15 +29,15 @@
         <img src="${conducteur.photo}" alt="Photo de ${conducteur.nom}" />
         <div class="matching-result-details">
           <p><strong>Conducteur :</strong> ${conducteur.nom}</p>
-          <p><strong>De :</strong> ${conducteur.from}</p>
-          <p><strong>À :</strong> ${conducteur.to}</p>
-          <p><strong>Départ :</strong> ${conducteur.heureDepart}</p>
-          <p><strong>Places dispo :</strong> ${conducteur.placesDisponibles}</p>
+          <p><strong>De :</strong> ${conducteur.point_depart}</p>
+          <p><strong>À :</strong> ${conducteur.point_arrivee}</p>
+          <p><strong>Départ :</strong> ${conducteur.heure_depart}</p>
+          <p><strong>Places dispo :</strong> ${conducteur.nb_places}</p>
         </div>
         <img src="${passager.photo}" alt="Photo de ${passager.nom}" />
         <div class="matching-result-details">
           <p><strong>Passager :</strong> ${passager.nom}</p>
-          <p><strong>Heure départ souhaitée :</strong> ${passager.heureDepartSouhaitee}</p>
+          <p><strong>Heure départ souhaitée :</strong> ${passager.heure_souhaitee}</p>
         </div>
       `;
 

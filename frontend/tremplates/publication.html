@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Publier - IFRI Comotorage</title>
+  <link rel="stylesheet" href="publication.css">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <div class="form-container">
+    <h1>Publier une annonce</h1>
+    <form id="form-publication">
+      <div class="form-group">
+        <label for="type">Je suis :</label>
+        <select id="type" name="type" required>
+          <option value="conducteur">Conducteur</option>
+          <option value="passager">Passager</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="depart">Point de départ</label>
+        <input type="text" id="depart" name="depart" required>
+      </div>
+      <div class="form-group">
+        <label for="arrivee">Point d'arrivée</label>
+        <input type="text" id="arrivee" name="arrivee" required>
+      </div>
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+      <div class="form-group">
+        <label for="heure">Heure de départ</label>
+        <input type="time" id="heure" name="heure" required>
+      </div>
+      <div class="form-group conducteur-fields">
+        <label for="places">Nombre de places (conducteur)</label>
+        <input type="number" id="places" name="places" min="1">
+      </div>
+
+      <!-- Champs cachés pour les coordonnées -->
+      <input type="hidden" id="depart_lat" name="depart_lat">
+      <input type="hidden" id="depart_lng" name="depart_lng">
+      <input type="hidden" id="arrivee_lat" name="arrivee_lat">
+      <input type="hidden" id="arrivee_lng" name="arrivee_lng">
+
+      <!-- Cartes Leaflet -->
+      <div class="form-group">
+        <label>Choisissez le point de départ sur la carte :</label>
+        <div id="mapDepart" style="height: 200px; margin-bottom: 15px;"></div>
+      </div>
+      <div class="form-group">
+        <label>Choisissez le point d'arrivée sur la carte :</label>
+        <div id="mapArrivee" style="height: 200px; margin-bottom: 15px;"></div>
+      </div>
+
+      <button type="submit">Publier</button>
+      <div id="message" style="margin-top:15px;color:red;text-align:center;"></div>
+    </form>
+    <a href="accueil.html">Retour à l'accueil</a>
+  </div>
+  <script src="publication.js"></script>
+</body>
+</html>

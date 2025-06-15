@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion - IFRI Comotorage</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='css/connexion.css')}}">
+</head>
+<body>
+  <div class="form-container">
+    <h1>Connexion</h1>
+    <form id="form-connexion">
+      <div class="form-group">
+        <label for="identifiant">E-mail ou téléphone</label>
+        <input type="text" id="identifiant" name="identifiant" required>
+      </div>
+      <div class="form-group">
+        <label for="motdepasse">Mot de passe</label>
+        <input type="password" id="motdepasse" name="motdepasse" required>
+      </div>
+      <button type="submit">Se connecter</button>
+      <div id="message" style="margin-top:15px;color:red;text-align:center;"></div>
+    </form>
+    <p><a href="reinitialisation.html">Mot de passe oublié ?</a></p>
+    <p>Pas encore inscrit ? <a href="inscription.html">Créer un compte</a></p>
+  </div>
+  <script src="{{url_for('static', filename='js/connexion.js')}}"></script>
+</body>
+</html>
