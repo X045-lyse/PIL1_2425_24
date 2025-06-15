@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Accueil – IFRI Comotorage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="accueil.css" />
+  <link rel="stylesheet" href="{{url_for('static', filename='css/acceuil.css')}}" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -47,6 +47,6 @@
     IFRI_Comotorage © 2025 – Projet intégrateur étudiants IFRI – UAC
   </footer>
 
-  <script src="accueil.js"></script>
+  <script src="{{url_for('static', filename='js/acceuil.js')}}"></script>
 </body>
 </html>
