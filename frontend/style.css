@@ -149,7 +149,7 @@ nav a.active {
   display: flex;
   align-items: center;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(105, 102, 102, 0.208)), 
-              url(./ifri.png) center/cover no-repeat;
+              url(./image_ifri.png) center/cover no-repeat;
   color: white;
   padding: 4rem 2rem;
 }
