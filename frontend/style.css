@@ -131,11 +131,7 @@ nav a.active {
   border-color: var(--primary-dark);
 }
 
-.btn-outline {
-  background-color: transparent;
-  color: var(--primary);
-  border: 1px solid var(--primary);
-}
+
 
 .btn-outline:hover {
   background-color: rgba(37, 99, 235, 0.1);
@@ -152,8 +148,8 @@ nav a.active {
   min-height: 500px;
   display: flex;
   align-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-              url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(105, 102, 102, 0.208)), 
+              url(./ifri.png) center/cover no-repeat;
   color: white;
   padding: 4rem 2rem;
 }
@@ -691,8 +687,3 @@ h4 + * {
 }
 
 
-.legal {
-    margin-left: 0 !important;
-    padding-left: 1em !important;
-    line-height: 1.4;
-}
