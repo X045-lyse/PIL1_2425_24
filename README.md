@@ -12,8 +12,8 @@
 ## 1. Cloner le projet
 
 ```bash
-git clone https://github.com/<votre-utilisateur>/projet_integrateur.git
-cd projet_integrateur
+git clone https://github.com/X045-lyse/PIL1_2425_24.git
+cd PIL1_2425_24
 ```
 
 ---
@@ -143,4 +143,4 @@ PIL1_2425_24/
 
 ---
 
-**Bon déploiement !**
+**Bon déploiement 😊!**
