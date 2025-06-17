@@ -1,4 +1,4 @@
-<!DOCTYPE html>More actions
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -14,15 +14,16 @@
     <header>
         <h1>Mon Profil</h1>
         <nav>
-            <a href="accueil.html">Accueil</a>
-            <a href="rides.html">Trajets</a>
-            <a href="profil.html" class="active">Profil</a>
-            <a href="#" id="logout-btn">Déconnexion</a>
+            <a href="accueil.html">Ma page</a>
+            <a href="publication.html">Publier un trajet/demande</a>
+            <a href="annonces.html">Voir les annonces</a>
+            <a href="messagerie.html">Messagerie</a>
+            <a href="connexion.html" id="logout">Se Déconnecter</a>
         </nav>
     </header>
 
     <main>
-        <section class="profile-container">
+        <div class="profile-container">
             <div class="profile-header">
                 <div class="avatar-container">
                     <img id="profile-avatar" src="images/default-avatar.png" alt="Photo de profil">
@@ -33,7 +34,6 @@
                 </div>
                 <h2 id="profile-name">Nom Prénom</h2>
             </div>
-
             <form id="profile-form" class="profile-form">
                 <div class="form-group">
                     <label for="lastname">Nom</label>
@@ -86,9 +86,25 @@
                     <button type="submit" id="save-btn">Enregistrer</button>
                 </div>
             </form>
-        </section>
+
+            <section>
+                <h3>Mes trajets</h3>
+                <ul id="mes-trajets"></ul>
+            </section>
+
+            <section>
+                <h3>Mes demandes</h3>
+                <ul id="mes-demandes"></ul>
+            </section>
+
+            <section>
+                <h3>Mes matchings</h3>
+                <ul id="mes-matchings"></ul>
+            </section>
+        </div>
     </main>
 
     <script src="profil.js"></script>
     <!-- Inclure ici votre SDK de carte si nécessaire (Google Maps, Mapbox, etc.) -->
 </body>
+</html>

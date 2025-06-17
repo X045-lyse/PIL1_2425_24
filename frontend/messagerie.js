@@ -6,7 +6,7 @@ const chatInputArea = document.querySelector('.chat-input-area');
 const chatUserName = document.querySelector('.chat-user-name');
 const chatUserPic = document.querySelector('.chat-user-pic');
 
-let conversations = []; // Liste reçue du backend (à remplir)
+let conversations = [];
 let activeConversation = null;
 
 // Affiche la liste des conversations dans la sidebar
@@ -86,25 +86,51 @@ function renderMessages() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Change la conversation active
-function selectConversation(id) {
+// Change la conversation active et charge les messages
+async function selectConversation(id) {
   activeConversation = conversations.find(c => c.id === id);
+  const token = localStorage.getItem("token");
+  const resUser = await fetch("http://localhost:5000/auth/profil", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+  const user = await resUser.json();
+  const res = await fetch(`http://localhost:5000/message/conversation/${user.id}/${id}`, {
+    headers: { "Authorization": "Bearer " + token }
+  });
+  const messages = await res.json();
+  activeConversation.messages = messages.map(msg => ({
+    text: msg.texte,
+    fromMe: msg.expediteur_id === user.id
+  }));
   renderConversations();
   renderMessages();
   chatInput.focus();
 }
 
-// Envoi du message (ici on appelle juste une fonction externe à compléter)
-sendBtn.onclick = () => {
+// Envoi du message
+sendBtn.onclick = async () => {
   const text = chatInput.value.trim();
   if (!text || !activeConversation) return;
-
-  // Appeler la fonction backend d'envoi message ici
-  // Exemple: sendMessageToBackend(activeConversation.id, text);
-
-  // Vide le champ
-  chatInput.value = '';
-  chatInput.focus();
+  const token = localStorage.getItem("token");
+  const resUser = await fetch("http://localhost:5000/auth/profil", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+  const user = await resUser.json();
+  await fetch("http://localhost:5000/message/envoyer", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + token
+    },
+    body: JSON.stringify({
+      expediteur_id: user.id,
+      destinataire_id: activeConversation.id,
+      texte: text
+    })
+  });
+  chatInput.value = "";
+  // Recharge les messages
+  selectConversation(activeConversation.id);
 };
 
 // Envoi aussi au "Entrée"
@@ -115,21 +141,7 @@ chatInput.addEventListener('keydown', (e) => {
   }
 });
 
-// Exemple: fonction pour charger les conversations (backend fait)
-// Ici on attend que Laure remplisse "conversations" avec les données réelles
-function loadConversations(data) {
-  conversations = data;
-  renderConversations();
-  // Optionnel: sélectionne la première conversation si elle existe
-  if (conversations.length > 0) {
-    selectConversation(conversations[0].id);
-  }
-}
-
-// Exporter pour que backend puisse appeler loadConversations et autres
-window.loadConversations = loadConversations;
-window.selectConversation = selectConversation;
-
+// Charge les contacts matchés et les affiche dans la sidebar
 document.addEventListener("DOMContentLoaded", async () => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -137,43 +149,44 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Charger les conversations
-  async function loadConversations() {
-    const res = await fetch("http://localhost:5000/message/conversations", {
-      headers: { "Authorization": "Bearer " + token }
-    });
-    const conversations = await res.json();
-    // ...affiche la liste dans la sidebar
+  const resUser = await fetch("http://localhost:5000/auth/profil", {
+    headers: { "Authorization": "Bearer " + token }
+  });
+  const user = await resUser.json();
+  const resProfil = await fetch(`http://localhost:5000/message/utilisateur/${user.id}`);
+  const profil = await resProfil.json();
+
+  const picSidebar = document.querySelector('.profile-pic-placeholder');
+  if (picSidebar) {
+    picSidebar.style.backgroundImage = `url('${profil.photo}')`;
+    picSidebar.style.backgroundSize = "cover";
+    picSidebar.style.backgroundPosition = "center";
+    picSidebar.style.border = "2px solid #2563eb";
+    picSidebar.style.cursor = "pointer";
+    picSidebar.title = "Voir mon profil";
+    picSidebar.onclick = () => window.location.href = "profil.html";
   }
 
-  // Charger les messages d'une conversation
-  async function loadMessages(conversationId) {
-    const res = await fetch(`http://localhost:5000/message/conversation/${conversationId}`, {
-      headers: { "Authorization": "Bearer " + token }
+  const res = await fetch(`http://localhost:5000/matching/contacts/${user.id}`);
+  const contacts = await res.json();
+
+  conversations = [];
+  for (let contactId of contacts) {
+    const resContact = await fetch(`http://localhost:5000/message/utilisateur/${contactId}`);
+    if (!resContact.ok) continue;
+    const contact = await resContact.json();
+    if (!contact.id) continue;
+    conversations.push({
+      id: contact.id,
+      userName: contact.prenom + " " + contact.nom,
+      userPhoto: contact.photo, // <-- c'est ici que l'avatar est pris
+      lastMessage: "",
+      unreadCount: 0,
+      messages: []
     });
-    const messages = await res.json();
-    // ...affiche les messages dans la zone de chat
   }
-
-  // Envoi d'un message
-  document.getElementById("sendBtn").onclick = async () => {
-    const text = document.getElementById("chatInput").value.trim();
-    if (!text) return;
-    // ...récupère l'id de la conversation ou du destinataire
-    await fetch("http://localhost:5000/message/envoyer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + token
-      },
-      body: JSON.stringify({
-        destinataire_id: /* à compléter */,
-        texte: text
-      })
-    });
-    document.getElementById("chatInput").value = "";
-    // Recharge les messages
-  };
-
-  loadConversations();
+  renderConversations();
+  if (conversations.length > 0) {
+    selectConversation(conversations[0].id);
+  }
 });

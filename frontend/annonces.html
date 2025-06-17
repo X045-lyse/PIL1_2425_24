@@ -4,25 +4,71 @@
   <meta charset="UTF-8">
   <title>Annonces - IFRI Comotorage</title>
   <link rel="stylesheet" href="annonces.css">
+  <style>
+    .navbar {
+      background: #2b6cb0;
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+    .navbar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1em;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .navbar a.active, .navbar a:hover {
+      background: #22508a;
+    }
+    .loader {
+      text-align: center;
+      margin: 30px 0;
+      font-size: 1.2em;
+      color: #2b6cb0;
+    }
+    .annonces-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 600px) {
+      main { padding: 5px; }
+      .annonce { padding: 10px; }
+      .navbar { gap: 10px; }
+    }
+  </style>
 </head>
 <body>
+  <nav class="navbar">
+    <a href="accueil.html">Ma page</a>
+    <a href="publication.html">Publier</a>
+    <a href="profil.html">Profil</a>
+    <a href="messagerie.html">Messagerie</a>
+  </nav>
   <header>
     <h1>Annonces de covoiturage</h1>
-    <a href="index.html">🏠 Accueil</a>
   </header>
 
   <main>
-    <div>
-      <button id="voir-trajets">Voir trajets</button>
+    <div class="annonces-controls">
+      <button id="voir-trajets" class="active">Voir trajets</button>
       <button id="voir-demandes">Voir demandes</button>
     </div>
     <div id="message" style="color:red;text-align:center;margin:10px 0;"></div>
-    <div id="annonces-list">
+    <div id="loader" class="loader" style="display:none;">Chargement...</div>
+    <section id="annonces-list">
       <!-- Les annonces seront ajoutées ici dynamiquement -->
-    </div>
+    </section>
   </main>
 
-  <a href="accueil.html">Retour à l'accueil</a>
+  <footer style="text-align:center;margin:30px 0 10px 0;">
+    <a href="accueil.html">Retour à l'accueil</a>
+  </footer>
   <script src="annonces.js"></script>
 </body>
 </html>

@@ -61,9 +61,21 @@ def get_utilisateur(user_id):
     user = Utilisateur.query.get(user_id)
     if not user:
         return jsonify({"message": "Utilisateur non trouvé"}), 404
+
+    # Si user.photo est déjà une URL complète, on la garde, sinon on génère un avatar
+    if user.photo and (user.photo.startswith("http://") or user.photo.startswith("https://")):
+        photo_url = user.photo
+    elif user.photo:
+        # Si c'est un chemin local, adapte selon ton serveur (exemple ci-dessous)
+        photo_url = f"http://localhost:5000/{user.photo.lstrip('/')}"
+    else:
+        # Avatar par défaut avec initiales
+        initials = (user.prenom[0] if user.prenom else "") + (user.nom[0] if user.nom else "")
+        photo_url = f"https://ui-avatars.com/api/?name={initials}&background=2563eb&color=fff"
+
     return jsonify({
         "id": user.id,
         "nom": user.nom,
         "prenom": user.prenom,
-        "photo": user.photo or 'https://via.placeholder.com/48?text=U'
+        "photo": photo_url
     })

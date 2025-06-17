@@ -51,8 +51,11 @@ class Matching(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     trajet_id = db.Column(db.Integer, db.ForeignKey('trajet.id'))
     demande_id = db.Column(db.Integer, db.ForeignKey('demande.id'))
-    status = db.Column(db.String(20))  # 'en attente', 'accepté', 'refusé'
+    status = db.Column(db.String(20))
     date_matching = db.Column(db.DateTime)
+
+    trajet = db.relationship("Trajet", backref="matchings", foreign_keys=[trajet_id])
+    demande = db.relationship("Demande", backref="matchings", foreign_keys=[demande_id])
 
 class Message(db.Model):
     __tablename__ = 'message'
