@@ -84,7 +84,6 @@ def lister_demandes():
         "arrivee_lat": d.arrivee_lat,
         "arrivee_lng": d.arrivee_lng
     } for d in demandes])
-<<<<<<< HEAD
 
 @demande_bp.route('/<int:id>', methods=['GET'])
 def get_demande(id):
@@ -117,8 +116,8 @@ def get_trajet(id):
         "arrivee_lng": trajet.arrivee_lng
     })
 
-=======
->>>>>>> 1b92ed75d2cf8a288ad8c920695938038805e166
+
+
 
 @demande_bp.route('/<int:id>', methods=['GET'])
 def get_demande(id):

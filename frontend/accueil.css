@@ -79,8 +79,7 @@ body {
   font-weight: bold;
 }
 
-<<<<<<< HEAD
-=======
+
 .nav-links {
   list-style: none;
   display: flex;
@@ -98,7 +97,7 @@ body {
 .nav-links li a:hover {
   text-decoration: underline;
 }
->>>>>>> 1b92ed75d2cf8a288ad8c920695938038805e166
+
 
 /* HEADER / HERO */
 .hero {
