@@ -188,13 +188,27 @@ nav a.active {
 
 .search-box {
   display: flex;
-  max-width: 600px;
-  margin: 0 auto 3rem;
-  background: white;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  justify-content: center; /* Centrer horizontalement */
+  margin: 2rem 0;
 }
+
+.search-box a {
+  display: inline-block;
+  background-color: #2563eb; /* Bleu vif */
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search-box a:hover {
+  background-color: #1e40af; /* Bleu plus foncé au survol */
+  transform: translateY(-2px);
+}
+
 
 .search-input {
   flex: 1;
@@ -541,9 +555,7 @@ footer {
     font-size: 1.1rem;
   }
   
-  .search-box {
-    flex-direction: column;
-  }
+  
   
   .search-input {
     padding: 1rem;

@@ -68,10 +68,6 @@ body {
   box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
 }
 
-/* ✅ Pour que les icônes aient un peu d'espace */
-.nav-links a i {
-  margin-right: 6px;
-}
 
 
 .logo {
