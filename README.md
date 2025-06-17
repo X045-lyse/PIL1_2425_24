@@ -4,7 +4,6 @@
 
 - **Python 3.10+** (recommandé : 3.11)
 - **MySQL** (ou MariaDB)
-- **Node.js** (optionnel, pour un serveur frontend local)
 - **Git** (pour cloner le projet)
 
 ---
@@ -45,7 +44,7 @@ python -m venv ../env
 ../env/Scripts/activate  # (Windows)
 # ou
 source ../env/bin/activate  # (Linux/Mac)
-
+Ensuite
 pip install -r requirements.txt
 ```
 
@@ -65,14 +64,11 @@ python app.py
 ```bash
 python app.py
 ```
-- Le backend sera accessible sur [http://localhost:5000](http://localhost:5000)
+- Le backend sera accessible sur [http://localhost:5000]
 
 ---
 
 ## 6. Lancer le frontend
-
-- **Option 1 : Ouvrir les fichiers HTML directement** (pas recommandé pour les appels API)
-- **Option 2 : Utiliser un serveur local** (recommandé)
 
 ### Avec VS Code (Live Server) :
 - Clique droit sur `frontend/index.html` → "Open with Live Server"
