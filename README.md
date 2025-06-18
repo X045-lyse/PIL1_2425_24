@@ -20,7 +20,7 @@ cd PIL1_2425_24
 ## 2. Installer et configurer la base de données MySQL
 
 1. **Créer la base de données et l’utilisateur** :
-
+Cela se fait de péférence dans MYSQL Command Line Client
 ```sql
 CREATE DATABASE covoiturage CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'ifriuser'@'localhost' IDENTIFIED BY 'motdepassefort';
@@ -41,9 +41,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ifriuser:motdepassefort
 ```bash
 cd backend
 python -m venv ../env
-../env/Scripts/activate  # (Windows)
+env\Scripts\activate  # (Windows)
 # ou
-source ../env/bin/activate  # (Linux/Mac)
+source env/bin/activate  # (Linux/Mac)
 Ensuite
 pip install -r requirements.txt
 ```
@@ -138,5 +138,13 @@ PIL1_2425_24/
 - **Frontend** : http://localhost:5500/ (ou via Live Server)
 
 ---
+
+## 11. Utilisation
+
+-Vous devez creer deux comptes, un compte conducteur et un compte passager
+-Sur chacun de ses comptes vous devez publier respectivement un trajet et une demande
+-Puis aller dans les annonces sur l'un des comptes et proposer un matching
+-Le matching s'accepte au niveau du profil de chaque utilisateur
+-Une fois le matching accepté, les deux utilisateurs seront mis en relation via la messagerie
 
 **Bon déploiement 😊!**
