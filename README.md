@@ -2,7 +2,7 @@
 
 ## Prérequis
 
-- **Python 3.10+** (recommandé : 3.11)
+- **Python 3.10+** (recommandé : 3.13.4)
 - **MySQL** (ou MariaDB)
 - **Git** (pour cloner le projet)
 
