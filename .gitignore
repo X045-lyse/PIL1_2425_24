@@ -1,0 +1,4 @@
+# Ignorer les fichiers/dossiers Python temporaires
+__pycache__/
+*.py[cod]
+*.pyo
