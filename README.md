@@ -44,7 +44,7 @@ python -m venv ../env
 env\Scripts\activate  # (Windows)
 # ou
 source env/bin/activate  # (Linux/Mac)
-Ensuite
+#S'assurer que L'interpreteur python utilisé est bien ce lui de l'environnement virtuel : Python 3.13.4 ('env':venv)Ensuite
 pip install -r requirements.txt
 ```
 
