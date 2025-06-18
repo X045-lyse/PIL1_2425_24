@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rapport Projet IFRI Comotorage</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f9f9f9;
+    color: #222;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  header h1 {
+    color: #0078d7;
+    margin-bottom: 5px;
+  }
+  header h2 {
+    color: #555;
+    font-weight: normal;
+  }
+  section {
+    margin-bottom: 30px;
+    background: #fff;
+    padding: 25px 30px;
+    box-shadow: 0 0 10px #ddd;
+    border-radius: 8px;
+  }
+  h3 {
+    border-bottom: 2px solid #0078d7;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    color: #0078d7;
+  }
+  ul {
+    list-style-type: disc;
+    margin-left: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+  th {
+    background-color: #0078d7;
+    color: white;
+  }
+  footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.9em;
+    color: #888;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Rapport du Projet IFRI Comotorage</h1>
+  <h2>Groupe PIL1_2425_24</h2>
+</header>
+
+<section>
+  <h3>1. Présentation du groupe</h3>
+  <p>Le groupe <strong>PIL1_2425_24</strong> est composé de 6 membres :</p>
+  <ul>
+    <li>ASSOGBA Elvine</li>
+    <li>BOUKARI Marlyse</li>
+    <li>KOUAGOU Anais</li>
+    <li>ODOUNLAMI Fabiola</li>
+    <li>WEKENON TOKPONTO Max</li>
+    <li>ZANNOU Josluide</li>
+  </ul>
+</section>
+
+<section>
+  <h3>2. Cahier des charges</h3>
+  <p>Le projet IFRI Comotorage vise à développer une plateforme web de mise en relation pour le covoiturage, permettant :</p>
+  <ul>
+    <li>La création et gestion des comptes utilisateurs</li>
+    <li>La publication d'offres et demandes de transport</li>
+    <li>Un système de matching intelligent entre offres et demandes</li>
+    <li>Une messagerie interne sécurisée</li>
+    <li>La sécurisation des données utilisateurs (mot de passe, etc.)</li>
+  </ul>
+</section>
+
+<section>
+  <h3>3. Répartition du travail</h3>
+  <table>
+    <thead>
+      <tr><th>Membre</th><th>Tâches réalisées</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Marlyse BOUKARI</td><td>C'est base de données ( creation de la base, des tables), de la conception des differentes images utulisé dans l'application , du logo et de l'asiignement des differentes tâches, la conception du rapport que voici</td></tr>
+      <tr><td>WEKENON TOKPONTO MAX</td><td>C'est chargé principalement du fonctionnement du backend , une partie technique du frontend et de la liaison front-back et des bases de donées et de lelaboration première du readme.md</td></tr>
+      <tr><td>ZANNOU Josluide</td><td>C'est chargé principalement de la conception de toutes  pages de notre application (en ce qui concerne html, css et js)</td></tr>
+      <tr><td>ASSOGBA Elvine</td><td>C'est chargée de seconder ZANNOU Josluide dans la conceptiondes differentes pages du frontend et de l'approche des solutions pour mener a bien le projet</td></tr>
+      <tr><td>KOUAGOU Anais</td><td>C'est chargé de seconder WEKENON TOKPONTO Max dans la conception du backend, de la proposition d'idées</td></tr>
+      <tr><td>ODOUNLAMI Fabiola</td><td>C'est chargée de seconder Marlyse BOUKARI dans la conception de la base de données et a contribué à la bonne marche du projet dans ce bref délai </td></tr>
+    </tbody>
+  </table>
+ <h3>Demarche suivie</h3>
+ <p> 
+  - Collecte des informations et des resoources necessaires à la réalisation du projet
+  - Partage des tâches par binomes (frontend, backendet base de données)
+  - Réalisation des traveaux de charque parties en unes semaine
+  - Regroupement des informations en depot github
+  - Agencement des resultats de recherche et resolution desproblemes technique
+  - Liaison frontend,backend et base de données
+  - Corection des erreurs 
+  - Test du fonctionnement de l'application
+   </p>
+  <h3>Problèmes rencontrés</h3>
+   <p>
+    Indisponibilité technique de certains membres du groupe et
+    stresse causé par temps assez court 
+   </p>
+
+</section>
+
+<section>
+  <h3>4. Fonctionnalités développées</h3>
+  <ul>
+    <li>Inscription et connexion sécurisée des utilisateurs avec hashage des mots de passe</li>
+    <li>Gestion des profils utilisateurs (édition, visualisation)</li>
+    <li>Publication d'annonces de transport (offres et demandes)</li>
+    <li>Algorithme de matching entre les annonces</li>
+    <li>Messagerie privée entre utilisateurs</li>
+    <li>Interface web responsive avec Flask, HTML, CSS, JS</li>
+  </ul>
+</section>
+
+<section>
+  <h3>5. Description technique</h3>
+  <h4>Base de données MySQL</h4>
+  <p>La base de données est organisée en plusieurs tables principales :</p>
+  <table>
+    <thead>
+      <tr><th>Table</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>utilisateur</td><td>Stocke les informations des utilisateurs (id, nom, email, mot de passe hashé, etc.)</td></tr>
+      <tr><td>Trajet</td><td>Contient les informations relatives au trajet de l'utilisateur(point de depart, d'arrivé, heure de depart, nombres de places:si l'utilisateur est un conducteur)</td></tr>
+      <tr><td>Demande</td><td> contient  les informations relatives au  trajet de l'utilisateur et les coordonnées geographique de son point de depart et d'arrivé</td></tr>
+      <tr><td>Matching</td><td>Contient des informations relatives à l'ofres et à la demande </td></tr>
+       <tr><td>messages</td><td>Historique des échanges entre utilisateurs</td></tr>
+        <tr><td>Reservation</td><td>historique des futurs trajets conducteur-passagers apres le matching</td></tr>
+    </tbody>
+  </table>
+  <h4>Backend Flask</h4>
+  <p>Le serveur Flask gère les routes principales :</p>
+  <ul>
+    <li>/ - connexion</li>
+    <li>/ - inscription</li>
+    <li>/ - profil utilisateur</li>
+    <li>/ - consultation et création d'offres</li>
+    <li>/ - consultation et création de demandes</li>
+    <li>/ - messagerie interne</li>
+  </ul>
+  <h4>Sécurité</h4>
+  <ul>
+    <li>Hashage des mots de passe avec bcrypt</li>
+    <li>Validation des formulaires côté client et serveur</li>
+    <li>Protection contre les injections SQL via ORM et requêtes préparées</li>
+  </ul>
+</section>
+
+<section>
+ 
+    <h3>5- Instruction de déploiement</h3>
+<h4>Prérequis</h4>
+<br>
+<p>
+Python 3.10+ (recommandé : 3.11)
+MySQL (ou MariaDB)
+Node.js (optionnel, pour un serveur frontend local)
+Git (pour cloner le projet) <br>
+<h2> <strong> . Cloner le projet </strong></h2> br
+git clone https://github.com/X045-lyse/PIL1_2425_24.git 
+cd PIL1_2425_24 <br>
+<h2> <strong>.. Installer et configurer la base de données MySQL</strong> </h2> <br>
+Créer la base de données et l’utilisateur : <br>
+<div style="    background: rgb(11, 11, 11);
+    border-radius:  8px;
+    color:aliceblue;
+    padding: 1rem;
+    text-align: justifie;
+    box-shadow:0 1px 3px 0 white, 0, 0 1px 2px 0 white;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+">
+CREATE DATABASE covoiturage CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;<br>
+CREATE USER 'ifriuser'@'localhost' IDENTIFIED BY 'motdepassefort'; <br>
+GRANT ALL PRIVILEGES ON covoiturage.* TO 'ifriuser'@'localhost'; <br>
+FLUSH PRIVILEGES;</div><br>
+Vérifier/modifier la chaîne de connexion dans backend/app.py si besoin : <br>
+<div style="    background: rgb(11, 11, 11);
+    border-radius:  8px;
+    color:aliceblue;
+    padding: 1rem;
+    text-align: justifie;
+    box-shadow:0 1px 3px 0 white, 0, 0 1px 2px 0 white;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+">
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://ifriuser:motdepassefort@localhost/covoiturage'; </div> <br>
+<h2> <strong>... Installer les dépendances Python (backend) </strong></h2><br>
+cd backend <br>
+python -m venv ../env <br>
+../env/Scripts/activate <span> # (Windows)</span> <br>
+# ou
+source ../env/bin/activate <span> # (Linux/Mac)</span> <br>
+
+pip install -r requirements.txt
+<h2> <strong>.... Initialiser la base de données</strong></h2>
+python app.py <br>
+Les tables seront créées automatiquement au premier lancement grâce à db.create_all().br
+<h2> <strong>..... Lancer le backend Flask</strong></h2>
+python app.py <br>
+Le backend sera accessible sur http://localhost:5000 <br>
+<h2> <strong>...... Lancer le frontend </strong></h2><br>
+Option 1 : Ouvrir les fichiers HTML directement (pas recommandé pour les appels API) <br>
+Option 2 : Utiliser un serveur local (recommandé) <br>
+Avec VS Code (Live Server) :
+Clique droit sur frontend/index.html → "Open with Live Server" <br>
+Ou avec Python : <br>
+cd ../frontend <br>
+python -m http.server 5500 <br>
+Le frontend sera accessible sur http://localhost:5500 <br>
+<h2> <strong>....... Configuration CORS</strong></h2><br>
+Le backend autorise déjà les origines localhost et 127.0.0.1 sur les ports 5000 et 5500. <br>
+Si tu changes de port ou d’URL, adapte la liste dans backend/app.py : <br>
+CORS( <br>
+    app,
+    supports_credentials=True,<br>
+    origins=[ <br>
+        "http://localhost:5500", <br>
+        "http://127.0.0.1:5500",<br>
+        "http://localhost:5000",<br>
+        "http://127.0.0.1:5000"<br>
+    ] <br>
+) <br>
+<h2> <strong>........ Dépannage </strong></h2><br>
+Erreur CORS : vérifie la config CORS et que tu utilises bien le bon port/URL. <br>
+Erreur 404 sur une image : place l’image manquante dans frontend/images/. <br>
+Erreur de connexion MySQL : vérifie l’utilisateur, le mot de passe et que MySQL tourne. <br>
+<h2> <strong>......... Structure du projet  </strong></h2><br>
+<span>
+PIL1_2425_24/ <br>
+│ <br>
+├── backend/ <br>
+│   ├── app.py <br>
+│   ├── models.py <br>
+│   ├── requirements.txt <br>
+│   ├── routes/ <br>
+│   └── ... <br>
+│<br>
+├── frontend/ <br>
+│   ├── index.html <br>
+│   ├── profil.html <br>
+│   ├── ... <br>
+│<br>
+└── env/  # environnement virtuel Python <br>
+</span>
+<h2> <strong>.......... Accès </strong></h2><br>
+Backend API : http://localhost:5000/ <br>
+Frontend : http://localhost:5500/ (ou via Live Server) <br>
+Bon déploiement 😊! <br>
+
+</p>
+</div>
+
+</section>
+
+<section>
+<h3> 6. Maneuel d'utilisation</h3>
+ 
+  <strong>
+    a- Inscription et connexion
+  </strong>
+  <p>
+    .L'utilisateur remplit un formulaire d'inscription (nom, email, mot de passe,...)
+    . Il peut ensuite se connecter avec ses identifiants
+ </p>
+ <strong>
+  b- Gestion des offres
+  </strong>
+  <p>
+    . Un utlisateur peutb publier une offre de transport( lieu de dépatr, destination, date/heure, nombres de places)
+    . Il peut egalement consulté l'offres des autres
+ </p>
+ <strong>
+  c- Demande de covoiturage
+  </strong>
+  <p>
+    . un utilisateur peut créer une demande (recherche d'un trajet precis)
+    . L'offre/demande est affiché sur la page acceuil de l'utilisateur
+ </p>
+ <strong>
+  d- Messagerie
+  </strong>
+  <p>
+    .Après le matching vaidé entre conducteurs et passagers , les deux utulisateurs peuvent s'envoyer des messages
+    . Interface simple et original de type boite de reception
+ </p>
+</section>
+
+<section>
+
+</section>
+<footer>
+  <p>IFRI Comotorage / Rapport projet 2025</p>
+</footer>
+
+</body>
+</html>
