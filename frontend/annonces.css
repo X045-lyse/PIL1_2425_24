@@ -6,7 +6,7 @@ body {
 }
 
 header {
-  background-color: #2b6cb0;
+  background-color: #2563eb;
   color: white;
   padding: 20px;
   display: flex;
@@ -35,7 +35,7 @@ main {
 
 .annonce h3 {
   margin-top: 0;
-  color: #2b6cb0;
+  color: #2563eb;
 }
 
 .annonce p {
@@ -43,7 +43,7 @@ main {
 }
 
 .annonce strong {
-  color: #007bff;
+  color: #2563eb;
 }
 
 button {

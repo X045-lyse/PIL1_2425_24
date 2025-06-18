@@ -6,20 +6,31 @@
     <title>Mon Profil - Covoiturage</title>
     <link rel="stylesheet" href="profil.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 </head>
 <body>
     <header>
         <h1>Mon Profil</h1>
         <nav>
+<<<<<<< HEAD
             <a href="accueil.html">Accueil</a>
             <a href="resultats.html">Trajets</a>
             <a href="profil.html" class="active">Profil</a>
             <a href="#" id="logout">Déconnexion</a>
+=======
+            <a href="accueil.html">Ma page</a>
+            <a href="publication.html">Publier un trajet/demande</a>
+            <a href="annonces.html">Voir les annonces</a>
+            <a href="messagerie.html">Messagerie</a>
+            <a href="connexion.html" id="logout">Se Déconnecter</a>
+>>>>>>> dc282667bcd0cf77b6b844fec206b88cc7036470
         </nav>
     </header>
           
     <main>
-        <section class="profile-container">
+        <div class="profile-container">
             <div class="profile-header">
                 <div class="avatar-container">
                     <img id="profile-avatar" src="images/default-avatar.png" alt="Photo de profil">
@@ -30,7 +41,6 @@
                 </div>
                 <h2 id="profile-name">Nom Prénom</h2>
             </div>
-
             <form id="profile-form" class="profile-form">
                 <div class="form-group">
                     <label for="lastname">Nom</label>
@@ -45,7 +55,9 @@
                 <div class="form-group">
                     <label for="departure-point">Point de départ habituel</label>
                     <input type="text" id="departure-point" name="departure-point" placeholder="Adresse ou point sur carte">
-                    <div id="map-preview" class="map-preview"></div>
+                    <div id="map-preview" class="map-preview" style="height: 200px; margin-top:10px;"></div>
+                    <input type="hidden" id="depart_lat" name="depart_lat">
+                    <input type="hidden" id="depart_lng" name="depart_lng">
                 </div>
 
                 <div class="form-group double-input">
@@ -69,10 +81,7 @@
                         <label for="car-model">Modèle</label>
                         <input type="text" id="car-model" name="car-model">
                     </div>
-                    <div class="form-group">
-                        <label for="car-model">Matriculation</label>
-                        <input type="text" id="car-model" name="car-model">
-                    </div>
+
                     <div class="form-group">
                         <label for="seats-available">Places disponibles</label>
                         <input type="number" id="seats-available" name="seats-available" min="1" max="10">
@@ -84,10 +93,25 @@
                     <button type="submit" id="save-btn">Enregistrer</button>
                 </div>
             </form>
-        </section>
+
+            <section>
+                <h3>Mes trajets</h3>
+                <ul id="mes-trajets"></ul>
+            </section>
+
+            <section>
+                <h3>Mes demandes</h3>
+                <ul id="mes-demandes"></ul>
+            </section>
+
+            <section>
+                <h3>Mes matchings</h3>
+                <ul id="mes-matchings"></ul>
+            </section>
+        </div>
     </main>
 
     <script src="profil.js"></script>
-   
+    <!-- Inclure ici votre SDK de carte si nécessaire (Google Maps, Mapbox, etc.) -->
 </body>
 </html>

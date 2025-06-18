@@ -10,9 +10,18 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body>
+  <header class="headi">
+        <h1>Publier une annonce</h1>
+        <nav>
+            <a href="accueil.html">Ma page</a>
+            <a href="annonces.html">Voir les annonces</a>
+            <a href="messagerie.html">Messagerie</a>
+            <a href="connexion.html" id="logout">Se Déconnecter</a>
+        </nav>
+    </header>
   <div class="form-container">
     <h1>Publier une annonce</h1>
-    <form id="form-publication">
+    <form id="trajetForm">
       <div class="form-group">
         <label for="type">Je suis :</label>
         <select id="type" name="type" required>
@@ -36,7 +45,7 @@
         <label for="heure">Heure de départ</label>
         <input type="time" id="heure" name="heure" required>
       </div>
-      <div class="form-group conducteur-fields">
+      <div id="conducteurFields" class="form-group conducteur-fields">
         <label for="places">Nombre de places (conducteur)</label>
         <input type="number" id="places" name="places" min="1">
       </div>

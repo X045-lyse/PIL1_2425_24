@@ -1,12 +1,76 @@
+/* RESET DE BASE */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f1f5f9;
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: start;
-  padding: 2rem;
+  flex-direction: column;
+  max-width: 100%;
+  align-items: center;
 }
 
+/* ✅ NAVBAR / HEADER */
+header {
+  background-color: #2563eb;
+  color: #ffffff;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(38, 99, 235, 0.15);
+}
+
+header h1 {
+  font-size: 1.5rem;
+}
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-buttons button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  padding: 0.6rem 1.2rem;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+}
+
+.nav-buttons button:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+}
+
+.nav-buttons button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+
+
+
+/* ✅ CONTENU CENTRÉ AU MILIEU DE L'ÉCRAN */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+}
+
+/* ✅ BOÎTE DU FORMULAIRE */
 .container {
   background: white;
   padding: 2rem;
@@ -19,14 +83,18 @@ body {
 h2 {
   text-align: center;
   margin-bottom: 1rem;
+  color: #1e293b;
 }
 
-input, select {
+
+input,
+select {
   width: 100%;
   padding: 0.8rem;
   margin: 0.5rem 0;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
+  font-size: 1rem;
 }
 
 button {
@@ -38,6 +106,7 @@ button {
   font-size: 1rem;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -47,4 +116,37 @@ button:hover {
 #message {
   text-align: center;
   margin-top: 1rem;
+  color: #0f172a;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  display: inline-block;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+}
+
+nav a:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+}
+
+nav a:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+}
+.headi{
+  margin-bottom: 2cm;
 }
